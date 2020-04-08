@@ -1,6 +1,12 @@
 from flask import Flask, render_template, url_for, redirect
+from flask_sqlalchemy import SQLAlchemy
+import googlemaps
+
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'SECRET'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+db = SQLAlchemy(app)
 
 
 @app.route('/')
