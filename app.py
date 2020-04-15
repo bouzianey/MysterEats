@@ -1,7 +1,10 @@
 from flask import Flask, render_template, url_for, redirect
 from flask_sqlalchemy import SQLAlchemy
+import os
 import googlemaps
 
+ASSETS_DIR = os.path.dirname(os.path.abspath(__file__))
+app = Flask(__name__)
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'SECRET'
@@ -61,4 +64,5 @@ def settings():
 
 
 if __name__ == '__main__':
-    app.run()
+    context = ('local.crt', 'local.key')  # certificate and key files
+    app.run(debug=True, ssl_context=context)

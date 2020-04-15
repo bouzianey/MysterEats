@@ -3,10 +3,12 @@ import pprint
 import time
 import random
 
+
+
 # google places api
 google_api = 'AIzaSyBXJT4-6to3js5aUnNsqcCdiSmBkPTb5Tk'
 
-# # define our client
+# define our client
 gmaps = googlemaps.Client(key=google_api)
 
 
