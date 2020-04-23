@@ -1,5 +1,6 @@
 from flask import Flask, render_template, url_for, redirect
 from flask_sqlalchemy import SQLAlchemy
+from forms import LoginForm, RegistrationForm
 import os
 import googlemaps
 
@@ -45,12 +46,14 @@ def about():
 
 @app.route('/login')
 def login():
-    return render_template('login.html')
+    form = LoginForm()
+    return render_template('login.html', form=form)
 
 
-@app.route('/signup')
+@app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    return render_template('signup.html')
+    form = RegistrationForm()
+    return render_template('signup.html', form=form)
 
 
 @app.route('/profile')
