@@ -19,15 +19,28 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="{{ url_for('profile') }}">Account <span class="sr-only">(current)</span></a>
-          </li>
+
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('adventure') }}">Adventure</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for('about') }}">About</a>
           </li>
+            {% if current_user.is_authenticated %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ url_for('profile') }}">Account <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ url_for('logout') }}">Logout <span class="sr-only">(current)</span></a>
+                </li>
+            {% else %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ url_for('login') }}">Login <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ url_for('signup') }}">Signup <span class="sr-only">(current)</span></a>
+                </li>
+            {% endif %}
         </ul>
         <span class="navbar-text">
           A Black Spoons Application
