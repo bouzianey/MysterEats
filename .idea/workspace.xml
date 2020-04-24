@@ -1,7 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8718bff7-0f4e-4f35-87be-632d88db9be3" name="Default Changelist" comment="" />
+    <list default="true" id="8718bff7-0f4e-4f35-87be-632d88db9be3" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/MysterEats_App/PlaceSearch.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MysterEats_App/css/style.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MysterEats_App/decorators.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/MysterEats.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/MysterEats.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MysterEats_App/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/MysterEats_App/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MysterEats_App/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/MysterEats_App/forms.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MysterEats_App/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/MysterEats_App/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MysterEats_App/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/MysterEats_App/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MysterEats_App/site.db" beforeDir="false" afterPath="$PROJECT_DIR$/MysterEats_App/site.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MysterEats_App/templates/adv_inputs.html" beforeDir="false" afterPath="$PROJECT_DIR$/MysterEats_App/templates/adv_inputs.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MysterEats_App/templates/directions.html" beforeDir="false" afterPath="$PROJECT_DIR$/MysterEats_App/templates/directions.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MysterEats_App/templates/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/MysterEats_App/templates/layout.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MysterEats_App/templates/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/MysterEats_App/templates/profile.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -15,6 +31,9 @@
         <option value="Python Script" />
       </list>
     </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1ZDgfdSNZHiEKrGS27qGFZF3xZX" />
   <component name="ProjectViewState">
@@ -34,17 +53,44 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="restartRequiresConfirmation" value="false" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
   </component>
-  <component name="RunManager" selected="Flask server.Flask (app.py)">
-    <configuration name="Flask (app.py)" type="Python.FlaskServer" temporary="true" nameIsGenerated="true">
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\paulo\PycharmProjects\BlackSpoons_prod\MysterEats_App" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Flask server.MysterEats">
+    <configuration name="run" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="MysterEats" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/run.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Flask" type="Python.FlaskServer" temporary="true" nameIsGenerated="true">
       <module name="MysterEats" />
       <option name="target" value="$PROJECT_DIR$/app.py" />
       <option name="targetType" value="PATH" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
@@ -55,11 +101,11 @@
     <configuration name="MysterEats" type="Python.FlaskServer">
       <option name="flaskDebug" value="true" />
       <module name="MysterEats" />
-      <option name="target" value="$PROJECT_DIR$/app.py" />
+      <option name="target" value="$PROJECT_DIR$/run.py" />
       <option name="targetType" value="PATH" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="C:\Users\drivera\PycharmProjects\MysterEats\MysterEats\Scripts\python.exe" />
+      <option name="SDK_HOME" value="C:\Users\paulo\PycharmProjects\BlackSpoons_prod\venv\Scripts\python.exe" />
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
@@ -70,6 +116,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.run" />
         <item itemvalue="Flask server.Flask (app.py)" />
       </list>
     </recent_temporary>
@@ -86,6 +133,8 @@
       <updated>1584379182785</updated>
       <workItem from="1584379185300" duration="6593000" />
       <workItem from="1584396217128" duration="452000" />
+      <workItem from="1587671121621" duration="155000" />
+      <workItem from="1587671287193" duration="13733000" />
     </task>
     <servers />
   </component>
@@ -93,35 +142,50 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="191" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1584396244313">
-      <screen x="0" y="0" width="1280" height="680" />
+    <state x="679" y="144" key="#MysterEats" timestamp="1587671150889">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="679" y="144" key="#MysterEats/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1587671150889" />
+    <state x="287" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1587671429058">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="191" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680@0.0.1280.680" timestamp="1584396244313" />
     <state x="294" y="160" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1680.1010/-1920.-26.1920.1040@0.0.1680.1010" timestamp="1584379247541" />
-    <state width="1340" height="256" key="GridCell.Tab.0.bottom" timestamp="1584389859156">
-      <screen x="0" y="0" width="1680" height="1010" />
+    <state x="287" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1587671429058" />
+    <state x="679" y="134" key="#run" timestamp="1587671395067">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="679" y="134" key="#run/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1587671395067" />
+    <state width="1877" height="123" key="GridCell.Tab.0.bottom" timestamp="1587686492345">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1340" height="256" key="GridCell.Tab.0.bottom/0.0.1680.1010/-1920.-26.1920.1040@0.0.1680.1010" timestamp="1584389859156" />
-    <state width="1340" height="256" key="GridCell.Tab.0.center" timestamp="1584389859156">
-      <screen x="0" y="0" width="1680" height="1010" />
+    <state width="1877" height="123" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1587686492345" />
+    <state width="1877" height="123" key="GridCell.Tab.0.center" timestamp="1587686492345">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1340" height="256" key="GridCell.Tab.0.center/0.0.1680.1010/-1920.-26.1920.1040@0.0.1680.1010" timestamp="1584389859156" />
-    <state width="1340" height="256" key="GridCell.Tab.0.left" timestamp="1584389859156">
-      <screen x="0" y="0" width="1680" height="1010" />
+    <state width="1877" height="123" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1587686492345" />
+    <state width="1877" height="123" key="GridCell.Tab.0.left" timestamp="1587686492345">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1340" height="256" key="GridCell.Tab.0.left/0.0.1680.1010/-1920.-26.1920.1040@0.0.1680.1010" timestamp="1584389859156" />
-    <state width="1340" height="256" key="GridCell.Tab.0.right" timestamp="1584389859156">
-      <screen x="0" y="0" width="1680" height="1010" />
+    <state width="1877" height="123" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1587686492345" />
+    <state width="1877" height="123" key="GridCell.Tab.0.right" timestamp="1587686492345">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1340" height="256" key="GridCell.Tab.0.right/0.0.1680.1010/-1920.-26.1920.1040@0.0.1680.1010" timestamp="1584389859156" />
-    <state x="172" y="0" key="SettingsEditor" timestamp="1584396254323">
-      <screen x="0" y="0" width="1280" height="680" />
+    <state width="1877" height="123" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1587686492345" />
+    <state x="258" y="0" key="SettingsEditor" timestamp="1587682295401">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="172" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1584396254323" />
-    <state x="535" y="329" key="com.intellij.ide.util.TipDialog" timestamp="1584379204789">
-      <screen x="0" y="0" width="1680" height="1010" />
+    <state x="258" y="0" key="SettingsEditor/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1587682295401" />
+    <state x="611" y="339" key="com.intellij.ide.util.TipDialog" timestamp="1587671287665">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="535" y="329" key="com.intellij.ide.util.TipDialog/0.0.1680.1010/-1920.-26.1920.1040@0.0.1680.1010" timestamp="1584379204789" />
+    <state x="611" y="339" key="com.intellij.ide.util.TipDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1587671287665" />
     <state x="0" y="0" width="1021" height="665" key="dock-window-1" timestamp="1584385911105">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
@@ -130,5 +194,6 @@
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/MysterEats$Flask__app_py_.coverage" NAME="Flask (app.py) Coverage Results" MODIFIED="1584396323790" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/MysterEats$MysterEats.coverage" NAME="MysterEats Coverage Results" MODIFIED="1584389859146" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/BlackSpoons_prod$MysterEats.coverage" NAME="MysterEats Coverage Results" MODIFIED="1587686492337" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
