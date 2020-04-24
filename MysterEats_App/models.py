@@ -22,9 +22,11 @@ class User(db.Model, UserMixin):
 
 
 class Adventure(db.Model):
-    adventureID = db.Column(db.Integer, primary_key=True)
+    adventureID = db.Column(db.Integer, autoincrement=True, primary_key=True)
     name = db.Column(db.String(20), nullable=False)
     date = db.Column(db.String(10), nullable=False)
+    comments = db.relationship('Comment', backref='adventure')
+    adventure_restaurant = db.relationship('AdventureRestaurant', backref='adventure_restaurants')
 
     def __repr__(self):
         return f"Adventure('{self.adventureID}','{self.name}','{self.date}')"
@@ -40,31 +42,45 @@ class UserAdventure(db.Model):
         return f"UserAdventure('{self.ua_key}','{self.adventureID}','{self.userID}')"
 
 
-# class Restaurant(db.Model):
-#     restaurantID = db.Column(db.Integer, primary_key=True)
-#     description = db.Column(db.String(50), nullable=False)
-#     restaurant_name = db.Column(db.String(30), nullable=False)
-#     type = db.Column(db.String(20), nullable=False)
-#     street = db.Column(db.String(30), nullable=False)
-#     city = db.Column(db.String(30), nullable=False)
-#     state = db.Column(db.String(30), nullable=False)
-#     country = db.Column(db.String(2), nullable=False)
-#     zipcode = db.Column(db.String(5), nullable=False)
-#     phone = db.Column(db.String(10), nullable=False)
-#     photo = db.Column(db.String(50), nullable=False)
-#     url = db.Column(db.String(50), nullable=False)
-#
-#
-# class AdventureRestaurant(db.Model):
-#     ar_key = db.Column(db.Integer, primary_key=True)
-#     adventureID = db.Column(db.Integer, db.ForeignKey('adventure.adventureID'), nullable=False)
-#     restaurantID = db.Column(db.Integer, db.ForeignKey('restaurant.restaurantID'), nullable=False)
-#
-#
-# class Comment(db.Model):
-#     commentID = db.Column(db.String(10), primary_key=True)
-#     adventureID = db.Column(db.Integer, db.ForeignKey('adventure.adventureID'), nullable=False)
-#     userID = db.Column(db.Integer, db.ForeignKey('user.userID'), nullable=False)
-#     comment = db.Column(db.String(100), nullable=False)
-#     date = db.Column(db.DateTime, default=datetime.now, nullable=False)
-#     photo = db.Column(db.String(50), nullable=False)
+class Restaurant(db.Model):
+    restaurantID = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    description = db.Column(db.String(50), nullable=True)
+    restaurant_name = db.Column(db.String(30), nullable=False)
+    type = db.Column(db.String(20), nullable=True)
+    street = db.Column(db.String(30), nullable=False)
+    city = db.Column(db.String(30), nullable=False)
+    state = db.Column(db.String(30), nullable=False)
+    country = db.Column(db.String(2), nullable=False)
+    zipcode = db.Column(db.String(5), nullable=True)
+    phone = db.Column(db.String(11), nullable=True)
+    photo = db.Column(db.String(50), nullable=True)
+    url = db.Column(db.String(50), nullable=True)
+
+    def __repr__(self):
+        return f"Restaurant('{self.restaurantID}','{self.restaurant_name}','{self.description}','{self.type}','" \
+               f"{self.street}','{self.city}','{self.country}','{self.zipcode}','{self.zipcode}','{self.phone}','" \
+               f"{self.photo}','{self.url}')"
+
+
+class AdventureRestaurant(db.Model):
+    ar_key = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    adventureID = db.Column(db.Integer, db.ForeignKey('adventure.adventureID'), nullable=False)
+    restaurantID = db.Column(db.Integer, db.ForeignKey('restaurant.restaurantID'), nullable=False)
+    restaurant = db.relationship('Restaurant', backref='adventure_restaurants')
+
+    def __repr__(self):
+        return f"AdventureRestaurant('{self.ar_key}','{self.adventureID}','{self.restaurantID}')"
+
+
+class Comment(db.Model):
+    commentID = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    adventureID = db.Column(db.Integer, db.ForeignKey('adventure.adventureID'), nullable=False)
+    userID = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    comment = db.Column(db.String(100), nullable=False)
+    date = db.Column(db.DateTime, default=datetime.now, nullable=False)
+    photo = db.Column(db.String(50), nullable=False)
+
+    def __repr__(self):
+        return f"UserAdventure('{self.commentID}','{self.userID}','{self.comment}','{self.date}','" \
+               f"{self.comment}','{self.date}')"
+

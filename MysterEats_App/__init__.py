@@ -13,4 +13,17 @@ login_manager = LoginManager(app)
 login_manager.login_view = 'login'
 login_manager.login_message_category = 'info'
 
+# # email server
+# MAIL_SERVER = 'smtp.googlemail.com'
+# MAIL_PORT = 25
+# MAIL_USE_TLS = False
+# MAIL_USE_SSL = False
+#
+# # Set environment variables for authentication
+# os.environ['EMAIL_USERNAME'] = '' #input your email address
+# os.environ['EMAIL_PASSWORD'] = '' #input your password
+#
+# # administrator list
+# ADMINS = [''] # again input your email address as a sender
+
 from MysterEats_App import routes

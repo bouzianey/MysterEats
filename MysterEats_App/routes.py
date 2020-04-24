@@ -1,7 +1,8 @@
 from flask import render_template, url_for, flash, redirect, request
 from MysterEats_App import app, db, bcrypt
-from MysterEats_App.forms import LoginForm, RegistrationForm
-from MysterEats_App.models import User
+from MysterEats_App.forms import *
+from MysterEats_App.models import *
+from MysterEats_App.PlaceSearch import *
 from flask_login import login_user, current_user, logout_user, login_required
 import os
 
@@ -12,12 +13,55 @@ def adventure():
     return render_template('adventure.html')
 
 
-@app.route('/adventure/inputs')
+@app.route('/adventure/inputs', methods=['GET', 'POST'])
 def adv_inputs():
-    return render_template('adv_inputs.html')
+    form = DisplayForm()
+
+    # Pass adventure parameters into directions page
+    if form.validate_on_submit():
+
+        location = form.city.data
+        preference = form.preference.data
+        radius = form.radius.data
+        if not radius:
+            # Needing Testing
+            radius = "15000"
+
+        # emails = form.email_addresses.data
+
+        # for email in emails:
+        #     # send email to recipient
+        #     # ADMINS[0] contains sender email address, So before you send an invitation you must set up config.py
+        #     RECIPIENTS = [email]
+        #     send_email(ADMINS[0], RECIPIENTS)
+
+        # Returns a list of restaurants
+        restaurant_obj = SearchRestaurant(location, preference, radius)
+
+        # Returns a restaurant
+        restaurant_details = restaurant_obj.get_best_restaurant()
+
+        destination = str(restaurant_details['geometry']['location']['lat']) + ',' + str(
+            restaurant_details['geometry']['location']['lng'])
+
+        # Creates a Direction Object
+        direction_obj = Directions(" ", destination)
+        route = direction_obj.get_directions()
+
+        address_dest = str(restaurant_details['formatted_address']).replace(' ', '+')
+        current_address = str(restaurant_obj.get_current_location()).replace(' ', '+')
+
+        uber_obj = Uber(" ", " ", " ", restaurant_details['geometry']['location']['lat'],
+                        restaurant_details['geometry']['location']['lng'], restaurant_details['formatted_address'])
+        uber_link = uber_obj.get_uber_link()
+
+        return render_template('directions.html', form=form, restaurant=restaurant_details, route=route,
+                               address_dest=address_dest, current_address=current_address, uber_link=uber_link)
+    else:
+        return render_template('adv_inputs.html', form=form)
 
 
-@app.route('/adventure/directions')
+@app.route('/adventure/directions', methods=['GET', 'POST'])
 def directions():
     return render_template('directions.html')
 
@@ -79,7 +123,19 @@ def signup():
 @app.route('/profile')
 @login_required
 def profile():
-    return render_template('profile.html')
+    # q = db.session.query(User)\
+    #     .filter(User.id == UserAdventure.userID)\
+    #     .filter(UserAdventure.adventureID == Adventure.adventureID)\
+    #     .filter(Adventure.adventureID == AdventureRestaurant.adventureID)\
+    #     .filter(AdventureRestaurant.restaurantID == Restaurant.restaurantID)\
+    #     .filter_by(User.id == current_user).all()
+
+    q = db.session.query(User, UserAdventure, Adventure)\
+        .filter(User.id == UserAdventure.userID)\
+        .filter(UserAdventure.adventureID == Adventure.adventureID)\
+        .filter(User.id == current_user.id).all()
+
+    return render_template('profile.html', query=q)
 
 
 @app.route('/profile/settings')

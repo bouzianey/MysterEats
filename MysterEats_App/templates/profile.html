@@ -2,4 +2,8 @@
 {% block content %}
     <h1>ACCOUNT PAGE</h1>
     <h1>{{ current_user.email }}</h1>
+
+    {% for user in query %}
+        <p>{{ user[2].name}}: {{user[2].date}}</p>
+    {% endfor %}
 {% endblock content %}

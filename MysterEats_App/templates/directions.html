@@ -1,28 +1,71 @@
 {% extends "layout.html "%}
 {% block content %}
-    <h1>Directions Page</h1>
-    <h1>User's gps location</h1>
 
-    <p>Click the button to get your gps coordinates</p>
-    <button onclick="getLocation()">Try me</button>
+    <!-- grabs user's current location on page load-->
+    <h1 align="center">Let's start the adventure</h1>
+    <!-- button for Uber -->
+    <p align="center">
+        <a  class="btn btn-primary btn-lg" href="{{uber_link}}">Get an Uber Ride</a>
+        <button class="btn btn-primary btn-lg" onclick="openForm_Instructions()">Show Html instructions</button>
+    </p>
+    <p align="center">
+        <iframe id="directions" align="center" width="700" height="600" frameborder="0">
+        </iframe>
+    </p>
+    <div class="form-popup" id="instructionForm">
+        <form action="" class="form-container">
+            <p align="center">{{restaurant['geometry']['location']['lat']}}, {{restaurant['geometry']['location']['lng']}} </p>
+            <p align="center">Restaurant Name: {{restaurant['name']}}</p>
+            <p align="center">Distance : {{ route.get_distance() }}</p>
+            <p align="center">Duration : {{ route.get_duration() }}</p>
+            {% for each_step in route.get_steps() %}
+                <p align="center">{{ each_step['html_instructions'] }}</p>
+            {% endfor %}
+            <button type="button" class="btn cancel" onclick="closeForm_Instructions()">Close</button>
+        </form>
+    </div>
 
-    <p id='demo'></p>
-
+    <!-- Displays Graphical  -->
     <script>
-      var x = document.getElementById("demo");
+        document.addEventListener('DOMContentLoaded', function getLocation() {
 
-      function getLocation() {
-        if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(showPosition);
-        }
-        else {
-          x.innerHTML = "Geolocation is not supported by this browser.";
-        }
-      }
+            var x = document.getElementById("demo");
 
-      function showPosition(position) {
-        x.innerHTML = "Latitude: " + position.coords.latitude +
-        "<br>Longitude: " + position.coords.longitude;
-      }
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(mapDirections);
+                //navigator.geolocation.getCurrentPosition(showPosition);
+            }
+            else {
+                x.innerHTML = "Geolocation is not supported by this browser.";
+            }
+
+            function mapDirections(position) {
+
+                let start_location = "{{current_address}}";
+
+                let destination = "{{address_dest}}";
+
+                document.getElementById("directions").src = "https://www.google.com/maps/embed/v1/directions?key=AIzaSyC-_LI36XAW8G7i3Esc6nVE9CDWjIqV1XU\n" +
+
+                    "&origin=" + start_location + "\n" +
+
+                    "&destination=" + destination + "\n" +
+
+                    "&avoid=tolls"
+
+                allowfullscreen;
+
+            };
+
+        }, false);
+
+        function openForm_Instructions() {
+            document.getElementById("instructionForm").style.display = "block";
+        }
+
+        function closeForm_Instructions() {
+            document.getElementById("instructionForm").style.display = "none";
+        }
+
     </script>
 {% endblock content %}
