@@ -22,21 +22,19 @@ class LoginForm(FlaskForm):
 
 class DisplayForm(FlaskForm):
     city = StringField('What is the city?', validators=[DataRequired()])
-    # TODO Implementation
-    # preference = SelectField('Food Preferences',
-    #                          choices=[('select', 'Select a choice...'), ('vegan', 'Vegetarian/Vegan'),
-    #                                   ('bar-restaurants', 'Bar'), ('group', 'Group Setting'),
-    #                                   ('family', 'Family Friendly')], default='select')
+
+    preference = SelectField('Food Preferences',
+                              choices=[('select', 'Select a choice...'), ('vegan', 'Vegetarian/Vegan'),
+                                       ('bar-restaurants', 'Bar'), ('group', 'Group Setting'),
+                                       ('family', 'Family Friendly')], default='select')
     # TODO Implementation
     # price = SelectField('Select a price range',
     #                     choices=[('select', 'Select a choice...'), ('maxprice1', '$'), ('maxprice2', '$$'),
     #                              ('maxprice3', '$$$'), ('maxprice4', '$$$$')], default='select')
 
     radius = SelectField('What is the radius', choices = [('16000', '10 mi'),('24000','15 mi') ,( '32000','20 mi') ,
-                                                          ( '40000','25 mi')])
-
-    # The email_addresses should contain the user's friend list from db here i just used my email addresses to test the code
-    email_addresses = StringField('Email addresses')
+                                                          ( '40000','25 mi')],default='15000')
+    email_address = StringField('Email addresses', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 

@@ -7,5 +7,11 @@
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
       <jdbc-url>jdbc:sqlite:C:\Users\paulo\PycharmProjects\BlackSpoons_prod\MysterEats_App\site.db</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="site [2]" uuid="83821306-8517-40d2-ba65-0a58a8135af2">
+      <driver-ref>sqlite.xerial</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
+      <jdbc-url>jdbc:sqlite:C:\Users\User\PycharmProjects\testing\BlackSpoons_prod\MysterEats_App\site.db</jdbc-url>
+    </data-source>
   </component>
 </project>

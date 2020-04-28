@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+    <p>Dear Friend,</p>
+    <p>You are invited to join us for ... if you are interested
+    <a href="{{ url_for('following', restaurant = restaurant , address_dest = address_dest, current_address = current_address , _external=True) }}">Click on the link to join us.</a>
+    Otherwise, just disregard this message.
+    </p>
+
+    <p>Regards,</p>
+    <p>The <code>MysterEats</code> Admin</p>
+</body>
+</html>

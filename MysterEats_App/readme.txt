@@ -1,7 +1,7 @@
 Authors:    Paul Osorio
             Marquis Lockhart
             Sejmir Basuljevic
-            Yacine Bouzianes
+            Yacine Bouziane
 
 Team:       Black Spoons
 Prof:       Dr. Imad Antonios

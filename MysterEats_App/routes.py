@@ -3,8 +3,10 @@ from MysterEats_App import app, db, bcrypt
 from MysterEats_App.forms import *
 from MysterEats_App.models import *
 from MysterEats_App.PlaceSearch import *
+from MysterEats_App.Email import *
+from MysterEats_App.config import *
 from flask_login import login_user, current_user, logout_user, login_required
-import os
+import json
 
 
 @app.route('/')
@@ -12,63 +14,73 @@ import os
 def adventure():
     return render_template('adventure.html')
 
-
-@app.route('/adventure/inputs', methods=['GET', 'POST'])
+@login_required
+@app.route('/adventure/inputs' , methods=['GET', 'POST'])
 def adv_inputs():
+
     form = DisplayForm()
 
-    # Pass adventure parameters into directions page
+
     if form.validate_on_submit():
 
-        location = form.city.data
-        preference = form.preference.data
-        radius = form.radius.data
-        if not radius:
-            # Needing Testing
-            radius = "15000"
+        location= form.city.data
+        preference= form.preference.data
+        radius= form.radius.data
+        email = form.email_address.data
 
-        # emails = form.email_addresses.data
-
-        # for email in emails:
-        #     # send email to recipient
-        #     # ADMINS[0] contains sender email address, So before you send an invitation you must set up config.py
-        #     RECIPIENTS = [email]
-        #     send_email(ADMINS[0], RECIPIENTS)
-
-        # Returns a list of restaurants
-        restaurant_obj = SearchRestaurant(location, preference, radius)
-
-        # Returns a restaurant
+        restaurant_obj = SearchRestaurant(location,preference,radius)
         restaurant_details = restaurant_obj.get_best_restaurant()
 
-        destination = str(restaurant_details['geometry']['location']['lat']) + ',' + str(
-            restaurant_details['geometry']['location']['lng'])
+        destination = str(restaurant_details['geometry']['location']['lat']) +','+ str(restaurant_details['geometry']['location']['lng'])
 
-        # Creates a Direction Object
-        direction_obj = Directions(" ", destination)
+
+        direction_obj = Directions(" ",destination)
         route = direction_obj.get_directions()
 
-        address_dest = str(restaurant_details['formatted_address']).replace(' ', '+')
-        current_address = str(restaurant_obj.get_current_location()).replace(' ', '+')
+        address_dest = str(restaurant_details['formatted_address']).replace(' ','+')
+        current_address = str(restaurant_obj.get_current_location()).replace(' ','+')
 
-        uber_obj = Uber(" ", " ", " ", restaurant_details['geometry']['location']['lat'],
-                        restaurant_details['geometry']['location']['lng'], restaurant_details['formatted_address'])
+        uber_obj = Uber(" "," "," ",restaurant_details['geometry']['location']['lat'],restaurant_details['geometry']['location']['lng'],restaurant_details['formatted_address'])
         uber_link = uber_obj.get_uber_link()
 
-        return render_template('directions.html', form=form, restaurant=restaurant_details, route=route,
-                               address_dest=address_dest, current_address=current_address, uber_link=uber_link)
+        user = User.query.filter_by(email="yogataga@gmail.com").first()
+        RECIPIENTS = [email]
+        send_email(ADMINS[0],RECIPIENTS,restaurant_details, address_dest, current_address)
+
+        return render_template('directions.html', form=form, restaurant = restaurant_details , route=route, address_dest = address_dest, current_address = current_address , uber_link = uber_link, email=email)
     else:
         return render_template('adv_inputs.html', form=form)
 
 
-@app.route('/adventure/directions', methods=['GET', 'POST'])
-def directions():
-    return render_template('directions.html')
+@app.route('/adventure/directions/<restaurant>/<route>/<address_dest>/<current_address>', methods=['GET', 'POST'])
+def directions( restaurant, route, address_dest, current_address):
+
+    return render_template('directions.html', restaurant = restaurant, route = route,  address_dest = address_dest, current_address = current_address)
 
 
-@app.route('/adventure/following')
-def following():
-    return render_template('following.html')
+@login_required
+@app.route('/adventure/following/<restaurant>/<address_dest>/<current_address>', methods=['GET', 'POST'])
+def following(restaurant, address_dest, current_address):
+
+    #convert restaurant details from a string to a dict
+    restaurant_format = restaurant.replace('\'','\"')
+    restaurant_dict = json.loads(restaurant_format)
+
+    destination = str(restaurant_dict['geometry']['location']['lat']) +','+ str(restaurant_dict['geometry']['location']['lng'])
+
+
+    direction_obj = Directions(" ",destination)
+    route = direction_obj.get_directions()
+
+    address_dest = str(restaurant_dict['formatted_address']).replace(' ','+')
+    current_address = str(direction_obj.get_origin()).replace(' ','+')
+
+    uber_obj = Uber(" "," "," ",restaurant_dict['geometry']['location']['lat'],restaurant_dict['geometry']['location']['lng'],restaurant_dict['formatted_address'])
+    uber_link = uber_obj.get_uber_link()
+
+
+    return render_template('directions.html', restaurant = restaurant_dict, route = route, address_dest = address_dest, current_address = current_address ,uber_link =uber_link)
+
 
 
 @app.route('/adventure/summary')

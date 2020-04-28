@@ -1,16 +1,9 @@
 #google search
-
 import urllib.request, json
 from random import randrange
 from googlemaps import Client
-from MysterEats_App.decorators import *
 import time
-
-# #flask mail
-# from flask_mail import Message
-# from .decorators import async_
-# from flask_mail import Mail
-# from config import ADMINS
+import os
 
 
 class RestaurantDirections:
@@ -28,7 +21,6 @@ class RestaurantDirections:
 
     def get_steps(self):
         return self.steps
-
 
 class SearchRestaurant:
 
@@ -48,51 +40,20 @@ class SearchRestaurant:
 
     def get_current_location(self):
 
-        gmaps = Client(key='AIzaSyBXJT4-6to3js5aUnNsqcCdiSmBkPTb5Tk')
+        gmaps = Client(key = os.environ['API_KEY'])
         origin = gmaps.geolocate()
         return str(origin['location']['lat'])+','+str(origin['location']['lng'])
 
     def get_best_restaurant(self):
 
-        gmaps = Client(key = 'AIzaSyBXJT4-6to3js5aUnNsqcCdiSmBkPTb5Tk')
+        gmaps = Client(key = os.environ['API_KEY'])
         endpoint = 'https://maps.googleapis.com/maps/api/place/textsearch/json?'
 
         #assign inputs
-        api_key = 'AIzaSyBXJT4-6to3js5aUnNsqcCdiSmBkPTb5Tk'
+        api_key = os.environ['API_KEY']
         type='restaurant'
-
-        # TODO Implementation
-        # if DisplayForm.data == 'vegan':
-        #     preference = str('vegan').replace(' ', '+')
-        # if DisplayForm.data == 'bar-restaurants':
-        #     preference = str('bar-restaurants').replace(' ', '+')
-        # if DisplayForm.data == 'group':
-        #     preference = str('group').replace(' ', '+')
-        # if DisplayForm.data == 'family':
-        #     preference = str('family').replace(' ', '+')
-        # # preference = str(preference).replace(' ','+')
-        # location = str(location).replace(' ', '')
-        # preference = preference + "+in+" + location
-
-        # TODO Implementation
-        # # Building the URL for the request
-        # if DisplayForm.data == 'maxprice1':
-        #     nav_request = 'query={}&location={}&radius={}&type={}&maxprice=1&key={}'.format(preference, location,
-        #                                                                                     radius, type, api_key)
-        # elif DisplayForm.data == 'maxprice2':
-        #     nav_request = 'query={}&location={}&radius={}&type={}&maxprice=2&key={}'.format(preference, location,
-        #                                                                                     radius, type, api_key)
-        # elif DisplayForm.data == 'maxprice3':
-        #     nav_request = 'query={}&location={}&radius={}&type={}&maxprice=3&key={}'.format(preference, location,
-        #                                                                                     radius, type, api_key)
-        # elif DisplayForm.data == 'maxprice4':
-        #     nav_request = 'query={}&location={}&radius={}&type={}&maxprice=4&key={}'.format(preference, location,
-        #                                                                                     radius, type, api_key)
-        # else:
-        #     nav_request = 'query={}&location={}&radius={}&type={}&key={}'.format(preference, location, radius, type,
-        #                                                                          api_key)
-        # request = endpoint + nav_request
-
+        if self.preference == "select":
+            preference = "-fastfood"
         preference = str(self.preference).replace(' ','+')
         location =  str(self.location).replace(' ','')
         preference = preference +"+in+"+ location
@@ -106,38 +67,40 @@ class SearchRestaurant:
         #Loads response as JSON
         places_result = json.loads(response)
 
-        print(places_result.keys())
-        print(len(places_result['results']))
-
         stored_results = []
+        restaurants_counter=0
         counter=0
         while counter < 3:
 
-            # loops through the api and appends restaurants to a list
-            for x in range(20):
-                my_place_id = places_result['results'][x]['place_id']
-                # define the fields you would liked return. Formatted as a list.
-                my_fields = ['name','formatted_address','geometry']
-                # make a request for the details.
-                places_details  = gmaps.place(place_id= my_place_id , fields= my_fields)
-                # store the results in a list object.
-                stored_results.append(places_details['result'])
+            try:
+                # loops through the api and appends restaurants to a list
+                for x in range(20):
+                    my_place_id = places_result['results'][x]['place_id']
+                    # define the fields you would liked return. Formatted as a list.
+                    my_fields = ['name','formatted_address','geometry']
+                    # make a request for the details.
+                    places_details  = gmaps.place(place_id= my_place_id , fields= my_fields)
+                    # store the results in a list object.
+                    stored_results.append(places_details['result'])
+                    #increment counter
+                    restaurants_counter=restaurants_counter+1
+                if counter < 2:
+                    # required
+                    time.sleep(1)
+                    token=places_result['next_page_token']
+                    #nav_request
+                    nav_request = 'key={}&pagetoken={}'.format(api_key,token)
+                    request = endpoint + nav_request
+                    #Sends the request and reads the response.
+                    response = urllib.request.urlopen(request).read()
+                    #Loads response as JSON
+                    places_result = json.loads(response)
+                    # final page, breaks the loop.
+                counter=counter+1
+            except:
+                break
 
-            if counter < 2:
-                # required
-                time.sleep(1)
-                token=places_result['next_page_token']
-                #nav_request
-                nav_request = 'key={}&pagetoken={}'.format(api_key,token)
-                request = endpoint + nav_request
-                #Sends the request and reads the response.
-                response = urllib.request.urlopen(request).read()
-                #Loads response as JSON
-                places_result = json.loads(response)
-                # final page, breaks the loop.
-            counter=counter+1
-
-        random_number=randrange (1,60,1)
+        random_number=randrange (1,restaurants_counter,1)
         #store in database
         return stored_results[random_number]
 
@@ -150,9 +113,8 @@ class Directions:
 
     def get_origin(self):
 
-        API_KEY = 'AIzaSyBXJT4-6to3js5aUnNsqcCdiSmBkPTb5Tk'
         # Define the Client
-        gmaps = Client(key = API_KEY)
+        gmaps = Client(key = os.environ['API_KEY'])
         location = gmaps.geolocate()
         return str(location['location']['lat'])+','+ str(location['location']['lng'])
 
@@ -164,7 +126,7 @@ class Directions:
         self.origin = self.get_origin()
         # Google MapsDdirections API endpoint
         endpoint = 'https://maps.googleapis.com/maps/api/directions/json?'
-        api_key = 'AIzaSyBXJT4-6to3js5aUnNsqcCdiSmBkPTb5Tk'
+        api_key = os.environ['API_KEY']
 
         # Building the URL for the request
         nav_request = 'origin={}&destination={}&key={}'.format(self.origin, self.destination, api_key)
@@ -190,10 +152,9 @@ class Directions:
             each_step['html_instructions'] = each_step['html_instructions'].replace('</b>',' ')
             each_step['html_instructions'] = each_step['html_instructions'].replace('<div style="font-size:0.9em">',' ')
             each_step['html_instructions'] = each_step['html_instructions'].replace('</div>',' ')
-            each_step['html_instructions'] = each_step['html_instructions'].replace('< /<wbr/>',' ')
+            each_step['html_instructions'] = each_step['html_instructions'].replace('/<wbr/>',' ')
 
         return RestaurantDirections(distance,duration,steps)
-
 
 class Uber:
 
@@ -208,18 +169,16 @@ class Uber:
 
     def get_origin_latlng(self):
 
-        API_KEY = 'AIzaSyBXJT4-6to3js5aUnNsqcCdiSmBkPTb5Tk'
         # Define the Client
-        gmaps = Client(key = API_KEY)
+        gmaps = Client(key = os.environ['API_KEY'])
         origin = gmaps.geolocate()
         self.pickup_lat = str(origin['location']['lat'])
         self.pickup_lng = str(origin['location']['lng'])
 
     def get_origin_address(self):
 
-        API_KEY = 'AIzaSyBXJT4-6to3js5aUnNsqcCdiSmBkPTb5Tk'
         # Define the Client
-        gmaps = Client(key = API_KEY)
+        gmaps = Client(key = os.environ['API_KEY'])
         location = self.pickup_lat +','+ self.pickup_lng
         pickup_location = gmaps.reverse_geocode(latlng=location)
         self.pickup_address = pickup_location[0]['formatted_address']
@@ -245,15 +204,3 @@ class Uber:
         uber_link = uber_link + "&dropoff%5bformatted_address%5d=" + self.dropoff_address
 
         return uber_link
-
-
-# class Email:
-#     @async_
-#     def send_async_email(app, msg):
-#         with app.app_context():
-#             mail.send(msg)
-#
-#     def send_email(sender, recipients):
-#         subject = 'Invitation to join a meeting'
-#         msg = Message(subject, sender=sender, recipients=recipients)
-#         send_async_email(app, msg)
