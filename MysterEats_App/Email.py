@@ -11,8 +11,6 @@ from flask import render_template
 app.config.update(mail_settings)
 mail = Mail(app)
 
-app.config.update(mail_settings)
-mail = Mail(app)
 
 
 @async_

@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8718bff7-0f4e-4f35-87be-632d88db9be3" name="Default Changelist" comment="Invitation ==&gt; Done&#10;Now you can invite a user to join an adventure">
-      <change afterPath="$PROJECT_DIR$/MysterEats_App/Email.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MysterEats_App/config.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MysterEats_App/templates/invitation.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+    <list default="true" id="8718bff7-0f4e-4f35-87be-632d88db9be3" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/MysterEats_App/templates/reset_request.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MysterEats_App/templates/reset_token.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MysterEats_App/user_util.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MysterEats_App/PlaceSearch.py" beforeDir="false" afterPath="$PROJECT_DIR$/MysterEats_App/PlaceSearch.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MysterEats_App/Email.py" beforeDir="false" afterPath="$PROJECT_DIR$/MysterEats_App/Email.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MysterEats_App/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/MysterEats_App/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MysterEats_App/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/MysterEats_App/config.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MysterEats_App/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/MysterEats_App/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MysterEats_App/readme.txt" beforeDir="false" afterPath="$PROJECT_DIR$/MysterEats_App/readme.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MysterEats_App/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/MysterEats_App/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MysterEats_App/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/MysterEats_App/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MysterEats_App/site.db" beforeDir="false" afterPath="$PROJECT_DIR$/MysterEats_App/site.db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MysterEats_App/templates/adv_inputs.html" beforeDir="false" afterPath="$PROJECT_DIR$/MysterEats_App/templates/adv_inputs.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MysterEats_App/templates/directions.html" beforeDir="false" afterPath="$PROJECT_DIR$/MysterEats_App/templates/directions.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MysterEats_App/site.db" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/MysterEats_App/templates/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/MysterEats_App/templates/layout.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MysterEats_App/test.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/MysterEats_App/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/MysterEats_App/templates/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MysterEats_App/templates/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/MysterEats_App/templates/profile.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MysterEats_App/templates/settings.html" beforeDir="false" afterPath="$PROJECT_DIR$/MysterEats_App/templates/settings.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,8 +27,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Flask Main" />
-        <option value="Python Script" />
         <option value="CSS File" />
+        <option value="Python Script" />
         <option value="HTML File" />
       </list>
     </option>
@@ -67,7 +67,7 @@
       <recent name="C:\Users\paulo\PycharmProjects\BlackSpoons_prod\MysterEats_App" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.test">
+  <component name="RunManager" selected="Flask server.MysterEats">
     <configuration name="run" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="MysterEats" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -175,12 +175,25 @@
       <workItem from="1587841035441" duration="10994000" />
       <workItem from="1587866596240" duration="3747000" />
       <workItem from="1588010608335" duration="16500000" />
-      <workItem from="1588107304081" duration="2157000" />
+      <workItem from="1588107304081" duration="7171000" />
+      <workItem from="1588177634285" duration="8634000" />
     </task>
+    <task id="LOCAL-00001" summary="Invitation ==&gt; Done&#10;Now you can invite a user to join an adventure">
+      <created>1588109489178</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1588109489178</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="2" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Invitation ==&gt; Done&#10;Now you can invite a user to join an adventure" />
+    <option name="LAST_COMMIT_MESSAGE" value="Invitation ==&gt; Done&#10;Now you can invite a user to join an adventure" />
   </component>
   <component name="WindowStateProjectService">
     <state x="483" y="0" key="#MysterEats" timestamp="1587688293645">
@@ -203,50 +216,50 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="679" y="134" key="#run/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1587671395067" />
-    <state x="303" y="0" key="CommitChangelistDialog2" timestamp="1588109443702">
+    <state x="303" y="0" key="CommitChangelistDialog2" timestamp="1588109488129">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="303" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1588109443702" />
-    <state width="1323" height="37" key="GridCell.Tab.0.bottom" timestamp="1588109258154">
+    <state x="303" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1588109488129" />
+    <state width="1323" height="12" key="GridCell.Tab.0.bottom" timestamp="1588187542347">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="37" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1588109258154" />
+    <state width="1323" height="12" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1588187542347" />
     <state width="1340" height="256" key="GridCell.Tab.0.bottom/0.0.1680.1010/-1920.-26.1920.1040@0.0.1680.1010" timestamp="1584389859156" />
     <state width="1877" height="123" key="GridCell.Tab.0.bottom/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1587686492345" />
-    <state width="1323" height="37" key="GridCell.Tab.0.center" timestamp="1588109258154">
+    <state width="1323" height="12" key="GridCell.Tab.0.center" timestamp="1588187542346">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="37" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1588109258154" />
+    <state width="1323" height="12" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1588187542346" />
     <state width="1340" height="256" key="GridCell.Tab.0.center/0.0.1680.1010/-1920.-26.1920.1040@0.0.1680.1010" timestamp="1584389859156" />
     <state width="1877" height="123" key="GridCell.Tab.0.center/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1587686492345" />
-    <state width="1323" height="37" key="GridCell.Tab.0.left" timestamp="1588109258154">
+    <state width="1323" height="12" key="GridCell.Tab.0.left" timestamp="1588187542346">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="37" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1588109258154" />
+    <state width="1323" height="12" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1588187542346" />
     <state width="1340" height="256" key="GridCell.Tab.0.left/0.0.1680.1010/-1920.-26.1920.1040@0.0.1680.1010" timestamp="1584389859156" />
     <state width="1877" height="123" key="GridCell.Tab.0.left/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1587686492345" />
-    <state width="1323" height="37" key="GridCell.Tab.0.right" timestamp="1588109258154">
+    <state width="1323" height="12" key="GridCell.Tab.0.right" timestamp="1588187542346">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="37" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1588109258154" />
+    <state width="1323" height="12" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1588187542346" />
     <state width="1340" height="256" key="GridCell.Tab.0.right/0.0.1680.1010/-1920.-26.1920.1040@0.0.1680.1010" timestamp="1584389859156" />
     <state width="1877" height="123" key="GridCell.Tab.0.right/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1587686492345" />
-    <state width="1323" height="37" key="GridCell.Tab.1.bottom" timestamp="1588109258154">
+    <state width="1323" height="37" key="GridCell.Tab.1.bottom" timestamp="1588116086062">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="37" key="GridCell.Tab.1.bottom/0.0.1366.728@0.0.1366.728" timestamp="1588109258154" />
-    <state width="1323" height="37" key="GridCell.Tab.1.center" timestamp="1588109258154">
+    <state width="1323" height="37" key="GridCell.Tab.1.bottom/0.0.1366.728@0.0.1366.728" timestamp="1588116086062" />
+    <state width="1323" height="37" key="GridCell.Tab.1.center" timestamp="1588116086062">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="37" key="GridCell.Tab.1.center/0.0.1366.728@0.0.1366.728" timestamp="1588109258154" />
-    <state width="1323" height="37" key="GridCell.Tab.1.left" timestamp="1588109258154">
+    <state width="1323" height="37" key="GridCell.Tab.1.center/0.0.1366.728@0.0.1366.728" timestamp="1588116086062" />
+    <state width="1323" height="37" key="GridCell.Tab.1.left" timestamp="1588116086062">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="37" key="GridCell.Tab.1.left/0.0.1366.728@0.0.1366.728" timestamp="1588109258154" />
-    <state width="1323" height="37" key="GridCell.Tab.1.right" timestamp="1588109258154">
+    <state width="1323" height="37" key="GridCell.Tab.1.left/0.0.1366.728@0.0.1366.728" timestamp="1588116086062" />
+    <state width="1323" height="37" key="GridCell.Tab.1.right" timestamp="1588116086062">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="37" key="GridCell.Tab.1.right/0.0.1366.728@0.0.1366.728" timestamp="1588109258154" />
+    <state width="1323" height="37" key="GridCell.Tab.1.right/0.0.1366.728@0.0.1366.728" timestamp="1588116086062" />
     <state width="196" height="457" key="HiddenNamespacesPopup" timestamp="1587765630499">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -256,6 +269,10 @@
     </state>
     <state x="172" y="0" key="SettingsEditor/0.0.1280.680@0.0.1280.680" timestamp="1584396254323" />
     <state x="258" y="0" key="SettingsEditor/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1587682295401" />
+    <state x="275" y="96" key="Vcs.Push.Dialog.v2" timestamp="1588109553691">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="275" y="96" key="Vcs.Push.Dialog.v2/0.0.1366.728@0.0.1366.728" timestamp="1588109553691" />
     <state x="611" y="339" key="com.intellij.ide.util.TipDialog" timestamp="1587671287665">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -265,15 +282,15 @@
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
     <state x="0" y="0" width="1021" height="665" key="dock-window-1/0.0.1680.1010/-1920.-26.1920.1040@0.0.1680.1010" timestamp="1584385911105" />
-    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1587766097089">
+    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1588184607856">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1587766097089" />
+    <state x="346" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1588184607856" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/MysterEats$MysterEats.coverage" NAME="MysterEats Coverage Results" MODIFIED="1584389859146" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/BlackSpoons_prod$MysterEats.coverage" NAME="MysterEats Coverage Results" MODIFIED="1588109020664" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/BlackSpoons_prod$MysterEats.coverage" NAME="MysterEats Coverage Results" MODIFIED="1588187542334" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/MysterEats$Flask__app_py_.coverage" NAME="Flask (app.py) Coverage Results" MODIFIED="1584396323790" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
-    <SUITE FILE_PATH="coverage/BlackSpoons_prod$test.coverage" NAME="test Coverage Results" MODIFIED="1588109223309" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/MysterEats_App" />
+    <SUITE FILE_PATH="coverage/BlackSpoons_prod$test.coverage" NAME="test Coverage Results" MODIFIED="1588110957444" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/MysterEats_App" />
   </component>
 </project>
