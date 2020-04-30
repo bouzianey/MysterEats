@@ -18,8 +18,8 @@ def send_async_email(app, msg):
     with app.app_context():
         mail.send(msg)
 
-def send_email(sender, recipients , restaurant_details , address_dest, current_address):
+def send_email(sender, recipients , restaurant_details , address_dest, current_address, adv_id):
     subject = 'Invitation to join a meeting'
     msg = Message(subject, sender=sender, recipients=recipients)
-    msg.html = render_template('invitation.html', restaurant = restaurant_details , address_dest = address_dest, current_address = current_address )
+    msg.html = render_template('invitation.html', restaurant = restaurant_details , address_dest = address_dest, current_address = current_address, adv_id = adv_id )
     send_async_email(app, msg)

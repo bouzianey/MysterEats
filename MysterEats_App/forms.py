@@ -1,10 +1,15 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField, SelectMultipleField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField, TextAreaField
 from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError, Optional
 from MysterEats_App.models import User
 
+class CommentPost(FlaskForm):
+
+    content = TextAreaField('Post Content', validators=[DataRequired()])
+    comment_pic = FileField('Post Picture', validators=[FileAllowed(['jpg', 'png'])])
+    submit = SubmitField("Submit!")
 
 class RegistrationForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
@@ -20,6 +25,8 @@ class LoginForm(FlaskForm):
 
 
 class DisplayForm(FlaskForm):
+    #TODO add adventure name restriction
+    adventureName = StringField('What is the adventure name ?', validators=[DataRequired()])
     city = StringField('What is the city?', validators=[DataRequired()])
 
     preference = SelectField('Food Preferences',

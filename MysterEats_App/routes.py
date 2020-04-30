@@ -9,14 +9,15 @@ from MysterEats_App.PlaceSearch import *
 from MysterEats_App.user_util import *
 import json
 
-@login_required
+
 @app.route('/')
 @app.route('/adventure', methods=['GET', 'POST'])
 def adventure():
     return render_template('adventure.html')
 
-@login_required
+
 @app.route('/adventure/inputs' , methods=['GET', 'POST'])
+@login_required
 def adv_inputs():
 
     form = DisplayForm()
@@ -28,6 +29,7 @@ def adv_inputs():
         preference= form.preference.data
         radius= form.radius.data
         email = form.email_address.data
+        adventureName = form.adventureName.data
 
         restaurant_obj = SearchRestaurant(location,preference,radius)
         restaurant_details = restaurant_obj.get_best_restaurant()
@@ -44,25 +46,31 @@ def adv_inputs():
         uber_obj = Uber(" "," "," ",restaurant_details['geometry']['location']['lat'],restaurant_details['geometry']['location']['lng'],restaurant_details['formatted_address'])
         uber_link = uber_obj.get_uber_link()
 
-        user = User.query.filter_by(email="yogataga@gmail.com").first()
-        RECIPIENTS = [email]
-        send_email(ADMINS[0],RECIPIENTS,restaurant_details, address_dest, current_address)
 
-        return render_template('directions.html', form=form, restaurant = restaurant_details , route=route, address_dest = address_dest, current_address = current_address , uber_link = uber_link, email=email)
+        adv_id = addAdventure(current_user.id, adventureName )
+        res_id = addRestaurant(restaurant_details)
+
+        addAdventureRestaurant(adv_id, res_id)
+
+        RECIPIENTS = [email]
+        send_email(ADMINS[0],RECIPIENTS,restaurant_details, address_dest, current_address, adv_id )
+
+        return render_template('directions.html',adv_id = adv_id,  host = "yes", form=form, restaurant = restaurant_details , route=route, address_dest = address_dest, current_address = current_address , uber_link = uber_link, email=email)
     else:
         return render_template('adv_inputs.html', form=form)
 
-@login_required
+
 @app.route('/adventure/directions/<restaurant>/<route>/<address_dest>/<current_address>', methods=['GET', 'POST'])
+@login_required
 def directions( restaurant, route, address_dest, current_address):
 
     return render_template('directions.html', restaurant = restaurant, route = route,  address_dest = address_dest, current_address = current_address)
 
 
 
-@app.route('/adventure/following/<restaurant>/<address_dest>/<current_address>', methods=['GET', 'POST'])
+@app.route('/adventure/following/<restaurant>/<address_dest>/<current_address>/<adv_id>', methods=['GET', 'POST'])
 @login_required
-def following(restaurant, address_dest, current_address):
+def following(restaurant, address_dest, current_address,adv_id):
 
     #convert restaurant details from a string to a dict
     restaurant_format = restaurant.replace('\'','\"')
@@ -80,14 +88,35 @@ def following(restaurant, address_dest, current_address):
     uber_obj = Uber(" "," "," ",restaurant_dict['geometry']['location']['lat'],restaurant_dict['geometry']['location']['lng'],restaurant_dict['formatted_address'])
     uber_link = uber_obj.get_uber_link()
 
+    #assign adventure ID
+    adv_id = int(adv_id)
+    ua = UserAdventure(userID = current_user.id, adventureID= adv_id)
+    db.session.add(ua)
+    db.session.commit()
 
-    return render_template('directions.html', restaurant = restaurant_dict, route = route, address_dest = address_dest, current_address = current_address ,uber_link =uber_link)
+    return render_template('directions.html',adv_id = adv_id, host = "no", restaurant = restaurant_dict, route = route, address_dest = address_dest, current_address = current_address ,uber_link =uber_link)
 
 
+@app.route('/adventure/summary/<int:adv_id>', methods=['GET', 'POST'])
+def summary(adv_id):
 
-@app.route('/adventure/summary')
-def summary():
-    return render_template('summary.html')
+    form = CommentPost()
+    adv = Adventure.query.get_or_404(adv_id)
+    dic = get_summary(adv_id)
+
+    if form.validate_on_submit():
+
+        picture_file = None
+        if form.comment_pic.data:
+            picture_file = save_picture(form.comment_pic.data)
+
+        comment = Comment(adventureID=adv.adventureID, userID=current_user.id, comment=form.content.data, photo=picture_file)
+        db.session.add(comment)
+        db.session.commit()
+
+        return redirect(url_for('summary', adv_id=adv.adventureID))
+
+    return render_template('summary.html', adv=adv, dic=dic, form=form)
 
 
 @app.route('/about')

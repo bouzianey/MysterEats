@@ -30,7 +30,13 @@
 
     {% for user in query %}
 
-        <p>{{ user[2].name}} - {{user[2].date}}</p>
+        <p>
+
+            <a class="" href="{{ url_for('summary', adv_id=user[2].adventureID) }}">{{ user[2].name}} </a>
+
+            - {{user[2].date}}
+
+        </p>
 
     {% endfor %}
 

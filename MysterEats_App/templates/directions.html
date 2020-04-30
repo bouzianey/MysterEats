@@ -43,7 +43,11 @@
             .form-container .btn:hover, .open-button:hover {
                 opacity: 1;
             }
-
+            .host_buttons {
+                width: 100%;
+                display: none;
+                text-align: center;
+            }
         </style>
     </head>
     <!-- grabs user's current location on page load-->
@@ -54,9 +58,21 @@
         <button class="btn btn-primary btn-lg" onclick="openForm_Instructions()">Show Html instructions</button>
     </p>
     <p align="center">
+        <div class="host_buttons" id="host_privelege">
+            <a class="btn btn-primary btn-lg" href="{{ url_for('adv_inputs') }}">Extend Adventure</a>
+            <a class="btn btn-primary btn-lg" href="{{ url_for('summary', adv_id = adv_id) }}">End Adventure</a>
+        </div>
+    </p>
+    <p align="center">
+    <div class="host_buttons" id="attende_privelege">
+        <a class="btn btn-primary btn-lg" href="{{ url_for('summary' , adv_id = adv_id) }}">Continue</a>
+    </div>
+    </p>
+    <p align="center">
         <iframe id="directions" align="center" width="700" height="600" frameborder="0">
         </iframe>
     </p>
+
     <div class="form-popup" id="instructionForm">
         <form action="" class="form-container">
             <p align="center">{{restaurant['geometry']['location']['lat']}}, {{restaurant['geometry']['location']['lng']}} </p>
@@ -72,9 +88,23 @@
 
     <!-- Displays Graphical  -->
     <script>
+
         document.addEventListener('DOMContentLoaded', function getLocation() {
 
             var x = document.getElementById("demo");
+            var x1 = document.getElementById("host_privelege");
+            var x2 = document.getElementById("attende_privelege");
+
+            let y = "{{host}}";
+
+            if( y === "yes" )
+            {
+                x1.style.display = "block";
+            }
+            else
+            {
+                x2.style.display = "block";
+            }
 
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(mapDirections);
