@@ -1,0 +1,43 @@
+{% extends "layout.html "%}
+
+{% block content %}
+
+    <h1>ACCOUNT PAGE</h1>
+
+    <div class="media">
+
+        <img src="{{ image_file }}" class="rounded-circle account-img">
+
+        <div class="media-body">
+
+            <h1>{{ current_user.email }}</h1>
+
+            {% if current_user.first_name != None and current_user.last_name != None %}
+
+                <h2>{{ current_user.first_name }} {{ current_user.last_name }}</h2>
+
+            {% else %}
+
+                <h5> Please add a first and last name in the settings page.</h5>
+
+            {% endif %}
+
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('settings') }}">Settings</a>
+
+        </div>
+
+    </div>
+
+    {% for user in query %}
+
+        <p>
+
+            <a class="" href="{{ url_for('summary', adv_id=user[2].adventureID) }}">{{ user[2].name}} </a>
+
+            - {{user[2].date}}
+
+        </p>
+
+    {% endfor %}
+
+{% endblock content %}

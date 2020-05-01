@@ -1,0 +1,213 @@
+{% extends "layout.html "%}
+
+{% block content %}
+
+    {#    <article class="media content-section">#}
+
+    {#    <div class="media-body">#}
+
+    {#      <div class="article-metadata">#}
+
+    {#        <a class="mr-2" href="#">{{ post.author.username }}</a>#}
+
+    {#        <small class="text-muted">{{ post.date_posted.strftime('%Y-%m-%d') }}</small>#}
+
+    {#        {% if post.author == current_user %}#}
+
+    {#          <div>#}
+
+    {#            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('update_post', post_id=post.id) }}">Update</a>#}
+
+    {#            <button type="button" class="btn btn-danger btn-sm m-1" data-toggle="modal" data-target="#deleteModal">Delete</button>#}
+
+    {#          </div>#}
+
+    {#        {% endif %}#}
+
+    {#      </div>#}
+
+    {#      <h2 class="article-title">{{ post.title }}</h2>#}
+
+    {#      <p class="article-content">{{ post.content }}</p>#}
+
+    {#    </div>#}
+
+    {#  </article>#}
+
+    {#  <!-- Modal -->#}
+
+    {#  <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">#}
+
+    {#    <div class="modal-dialog" role="document">#}
+
+    {#      <div class="modal-content">#}
+
+    {#        <div class="modal-header">#}
+
+    {#          <h5 class="modal-title" id="deleteModalLabel">Delete Post?</h5>#}
+
+    {#          <button type="button" class="close" data-dismiss="modal" aria-label="Close">#}
+
+    {#            <span aria-hidden="true">&times;</span>#}
+
+    {#          </button>#}
+
+    {#        </div>#}
+
+    {#        <div class="modal-footer">#}
+
+    {#          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>#}
+
+    {#          <form action="{{ url_for('delete_post', post_id=post.id) }}" method="POST">#}
+
+    {#            <input class="btn btn-danger" type="submit" value="Delete">#}
+
+    {#          </form>#}
+
+    {#        </div>#}
+
+    {#      </div>#}
+
+    {#    </div>#}
+
+    {#  </div>#}
+
+    <h1>Summary Page ({{ dic['adventure']['date'].strftime('%Y-%m-%d') }})</h1>
+
+    <!-- TODO remove last attendee comma-->
+
+    <h3>{{dic['adventure']['name']}} hosted by {{dic['host']['first_name']}} {{ dic['host']['last_name'] }}
+
+        <br>
+
+        <h5>
+
+            {% set alist = [] %}
+
+            {% for i in dic['attendees']%}
+
+                <!-- Prevents the append from printing None-->
+
+                {{ alist.append(i['first_name'] + ' ' + i['last_name']) if alist.append(i['first_name'] + ' ' + i['last_name'])}}
+
+            {% endfor %}
+
+            <!-- Prints the attendees by separating them by commas-->
+
+            Attendees: {{ ', '.join(alist) }}
+
+        </h5>
+
+
+
+    </h3>
+
+    <br>
+
+    <h4>Restaurants</h4>
+
+    {% for i in dic['restaurants']%}
+
+        <p>{{i['name']}} - {{i['type']}}</p>
+
+        <p>Desc: {{i['desc']}}</p>
+
+        <p>Address: {{i['street']}}, {{i['city']}}, {{i['state']}} {{i['zipcode']}} </p>
+
+        <p>Country: {{i['country']}}</p>
+
+        <br>
+
+    {% endfor %}
+
+
+
+    <form method="POST" action="" enctype="multipart/form-data">
+
+        {{ form.hidden_tag() }}
+
+        <fieldset class="form-group">
+
+            <legend class="border-bottom mb-4">Create a new post.</legend>
+
+            <div class="form-group">
+
+                {% if form.content.errors %}
+
+                    {{ form.content(class="form-control form-control-lg is-invalid") }}
+
+                    <div class="invalid-feedback">
+
+                        {% for error in form.content.errors %}
+
+                            <span>{{ error }}</span>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% else %}
+
+                    {{ form.content(class="form-control form-control-lg") }}
+
+                {% endif %}
+
+            </div>
+
+            <div class="form-group">
+
+                {{ form.comment_pic.label() }}
+
+                {{ form.comment_pic(class="form-control-file") }}
+
+                {% if form.comment_pic.errors %}
+
+                    {% for error in form.comment_pic.errors %}
+
+                        <span class="text-danger">{{ error }}</span></br>
+
+                    {% endfor %}
+
+                {% endif %}
+
+            </div>
+
+        </fieldset>
+
+        <div class="form-group">
+
+            {{ form.submit(class="btn btn-outline-info") }}
+
+        </div>
+
+    </form>
+
+
+
+    <h4>Comments</h4>
+
+    {% for i in dic['comments'] %}
+
+        <div class="media-body">
+
+            <p>
+
+                <img src="{{ url_for('static', filename='profile_pics/' + i['profile_pic']) }}" class="rounded-circle account-img">
+
+                {{i['first_name']}} {{ i['last_name']}} - {{ i['date'].strftime('%c')[:19] }}</p>
+
+            <p class="article-content"> {{ i['content']}}</p>
+
+            {% if i['content_photo'] %}
+
+                <img src="{{ url_for('static', filename='profile_pics/' + i['content_photo']) }}" class="rounded-circle account-img">
+
+            {% endif %}
+
+            <br>
+
+        </div>
+
+    {% endfor %}
+
+{% endblock content %}
