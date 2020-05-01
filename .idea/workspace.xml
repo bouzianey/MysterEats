@@ -95,11 +95,24 @@
       <updated>1584379182785</updated>
       <workItem from="1584379185300" duration="6593000" />
       <workItem from="1584396217128" duration="452000" />
+      <workItem from="1588291757266" duration="286000" />
     </task>
+    <task id="LOCAL-00001" summary="force workspace.xml">
+      <created>1588292000785</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1588292000785</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="force workspace.xml" />
+    <option name="LAST_COMMIT_MESSAGE" value="force workspace.xml" />
   </component>
   <component name="WindowStateProjectService">
     <state x="191" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1584396244313">
@@ -107,6 +120,10 @@
     </state>
     <state x="191" y="0" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1280.680@0.0.1280.680" timestamp="1584396244313" />
     <state x="294" y="160" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1680.1010/-1920.-26.1920.1040@0.0.1680.1010" timestamp="1584379247541" />
+    <state x="302" y="0" key="CommitChangelistDialog2" timestamp="1588291999095">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="302" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1588291999095" />
     <state width="1340" height="256" key="GridCell.Tab.0.bottom" timestamp="1584389859156">
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
@@ -139,10 +156,10 @@
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
     <state x="0" y="0" width="1021" height="665" key="dock-window-1/0.0.1680.1010/-1920.-26.1920.1040@0.0.1680.1010" timestamp="1584385911105" />
-    <state x="365" y="155" key="git4idea.merge.GitPullDialog" timestamp="1588291924688">
+    <state x="365" y="155" key="git4idea.merge.GitPullDialog" timestamp="1588292024350">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="365" y="155" key="git4idea.merge.GitPullDialog/0.0.1366.728@0.0.1366.728" timestamp="1588291924688" />
+    <state x="365" y="155" key="git4idea.merge.GitPullDialog/0.0.1366.728@0.0.1366.728" timestamp="1588292024350" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/MysterEats$Flask__app_py_.coverage" NAME="Flask (app.py) Coverage Results" MODIFIED="1584396323790" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
