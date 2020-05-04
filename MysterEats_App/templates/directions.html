@@ -54,19 +54,14 @@
     <h1 align="center">Let's start the adventure</h1>
     <!-- button for Uber -->
     <p align="center">
-        <a  class="btn btn-primary btn-lg" href="{{uber_link}}">Get an Uber Ride</a>
+        <a  class="btn btn-primary btn-lg" href="{{uber_link}}" target="_blank">Get an Uber Ride</a>
         <button class="btn btn-primary btn-lg" onclick="openForm_Instructions()">Show Html instructions</button>
     </p>
     <p align="center">
-        <div class="host_buttons" id="host_privelege">
-            <a class="btn btn-primary btn-lg" href="{{ url_for('adv_inputs') }}">Extend Adventure</a>
-            <a class="btn btn-primary btn-lg" href="{{ url_for('summary', adv_id = adv_id) }}">End Adventure</a>
+        <div class="host_buttons" id="both_users_privilege">
+            <a class="btn btn-primary btn-lg" href="{{ url_for('following', host = host, restaurant = restaurant, adv_id = adv_id) }}">Continue To Adventure</a>
         </div>
     </p>
-    <p align="center">
-    <div class="host_buttons" id="attende_privelege">
-        <a class="btn btn-primary btn-lg" href="{{ url_for('summary' , adv_id = adv_id) }}">Continue</a>
-    </div>
     </p>
     <p align="center">
         <iframe id="directions" align="center" width="700" height="600" frameborder="0">
@@ -92,19 +87,9 @@
         document.addEventListener('DOMContentLoaded', function getLocation() {
 
             var x = document.getElementById("demo");
-            var x1 = document.getElementById("host_privelege");
-            var x2 = document.getElementById("attende_privelege");
+            var x1 = document.getElementById("both_users_privilege");
 
-            let y = "{{host}}";
-
-            if( y === "yes" )
-            {
-                x1.style.display = "block";
-            }
-            else
-            {
-                x2.style.display = "block";
-            }
+            x1.style.display = "block";
 
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(mapDirections);

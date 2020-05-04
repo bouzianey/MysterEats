@@ -10,18 +10,21 @@ from MysterEats_App.user_util import *
 import json
 
 
+
+
+
 @app.route('/')
 @app.route('/adventure', methods=['GET', 'POST'])
 def adventure():
     return render_template('adventure.html')
 
 
-@app.route('/adventure/inputs' , methods=['GET', 'POST'])
+
+@app.route('/adventure/inputs/<int:adv_id>', methods=['GET', 'POST'])
 @login_required
-def adv_inputs():
+def adv_inputs(adv_id):
 
     form = DisplayForm()
-
 
     if form.validate_on_submit():
 
@@ -30,6 +33,7 @@ def adv_inputs():
         radius= form.radius.data
         email = form.email_address.data
         adventureName = form.adventureName.data
+        RECIPIENTS = [email]
 
         restaurant_obj = SearchRestaurant(location,preference,radius)
         restaurant_details = restaurant_obj.get_best_restaurant()
@@ -46,31 +50,42 @@ def adv_inputs():
         uber_obj = Uber(" "," "," ",restaurant_details['geometry']['location']['lat'],restaurant_details['geometry']['location']['lng'],restaurant_details['formatted_address'])
         uber_link = uber_obj.get_uber_link()
 
+        if adv_id == 0:
+            adv_id = addAdventure(current_user.id, adventureName )
+        else:
+            adv_id = int(adv_id)
+            q = db.session.query(User).filter(UserAdventure.adventureID == adv_id).all()
+            if q:
+                RECIPIENTS = [q[1].email]
 
-        adv_id = addAdventure(current_user.id, adventureName )
         res_id = addRestaurant(restaurant_details)
-
         addAdventureRestaurant(adv_id, res_id)
+        restaurant_details['formatted_address'] = restaurant_details['formatted_address'].replace(',',' ')
+        restaurant_details['name'] = restaurant_details['name'].replace('\'',' ')
 
-        RECIPIENTS = [email]
-        send_email(ADMINS[0],RECIPIENTS,restaurant_details, address_dest, current_address, adv_id )
+        if RECIPIENTS:
+            send_email(ADMINS[0], RECIPIENTS, restaurant_details, adv_id)
 
         return render_template('directions.html',adv_id = adv_id,  host = "yes", form=form, restaurant = restaurant_details , route=route, address_dest = address_dest, current_address = current_address , uber_link = uber_link, email=email)
     else:
-        return render_template('adv_inputs.html', form=form)
+        return render_template('adv_inputs.html',adv_id = adv_id, form=form)
 
 
-@app.route('/adventure/directions/<restaurant>/<route>/<address_dest>/<current_address>', methods=['GET', 'POST'])
+@app.route('/adventure/following/<host>/<restaurant>/<int:adv_id>', methods=['GET', 'POST'])
 @login_required
-def directions( restaurant, route, address_dest, current_address):
+def following( host,restaurant, adv_id):
 
-    return render_template('directions.html', restaurant = restaurant, route = route,  address_dest = address_dest, current_address = current_address)
+    #convert restaurant details from a string to a dict
+    restaurant_format = restaurant.replace('\'','\"')
+    restaurant_dict = json.loads(restaurant_format)
+
+    return render_template('following.html', host = host, restaurant = restaurant_dict, adv_id = adv_id )
 
 
 
-@app.route('/adventure/following/<restaurant>/<address_dest>/<current_address>/<adv_id>', methods=['GET', 'POST'])
+@app.route('/adventure/directions/<restaurant>/<int:adv_id>', methods=['GET', 'POST'])
 @login_required
-def following(restaurant, address_dest, current_address,adv_id):
+def directions(restaurant,adv_id):
 
     #convert restaurant details from a string to a dict
     restaurant_format = restaurant.replace('\'','\"')
@@ -89,12 +104,14 @@ def following(restaurant, address_dest, current_address,adv_id):
     uber_link = uber_obj.get_uber_link()
 
     #assign adventure ID
-    adv_id = int(adv_id)
-    ua = UserAdventure(userID = current_user.id, adventureID= adv_id)
-    db.session.add(ua)
-    db.session.commit()
+    q = db.session.query(UserAdventure).filter(UserAdventure.adventureID == adv_id)\
+        .filter(UserAdventure.userID == current_user.id).first()
+    if q is None:
+        ua = UserAdventure(userID=current_user.id, adventureID=adv_id)
+        db.session.add(ua)
+        db.session.commit()
 
-    return render_template('directions.html',adv_id = adv_id, host = "no", restaurant = restaurant_dict, route = route, address_dest = address_dest, current_address = current_address ,uber_link =uber_link)
+    return render_template('directions.html', adv_id = adv_id, host = "no", restaurant = restaurant_dict, route = route, address_dest = address_dest, current_address = current_address ,uber_link =uber_link)
 
 
 @app.route('/adventure/summary/<int:adv_id>', methods=['GET', 'POST'])

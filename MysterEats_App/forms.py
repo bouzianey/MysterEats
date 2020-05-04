@@ -5,6 +5,7 @@ from flask_login import current_user
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError, Optional
 from MysterEats_App.models import User
 
+
 class CommentPost(FlaskForm):
 
     content = TextAreaField('Post Content', validators=[DataRequired()])
@@ -26,12 +27,12 @@ class LoginForm(FlaskForm):
 
 class DisplayForm(FlaskForm):
     #TODO add adventure name restriction
-    adventureName = StringField('What is the adventure name ?', validators=[DataRequired()])
+    adventureName = StringField('What is the adventure name ?', validators=[Optional()])
     city = StringField('What is the city?', validators=[DataRequired()])
 
     preference = SelectField('Food Preferences',
-                              choices=[('select', 'Select a choice...'), ('vegan', 'Vegetarian/Vegan'),
-                                       ('bar-restaurants', 'Bar'), ('group', 'Group Setting'),
+                              choices=[('select', 'Select a choice...'), ('vegan+vegetarian', 'Vegetarian/Vegan'),
+                                       ('bar+restaurants', 'Bar'), ('group', 'Group Setting'),
                                        ('family', 'Family Friendly')], default='select')
     # TODO Implementation
     # price = SelectField('Select a price range',
@@ -40,7 +41,7 @@ class DisplayForm(FlaskForm):
 
     radius = SelectField('What is the radius', choices = [('16000', '10 mi'),('24000','15 mi') ,( '32000','20 mi') ,
                                                           ( '40000','25 mi')],default='15000')
-    email_address = StringField('Email addresses', validators=[DataRequired()])
+    email_address = StringField('Email addresses', validators=[Optional()])
     submit = SubmitField('Submit')
 
 class RegistrationForm(FlaskForm):
@@ -102,4 +103,3 @@ class ResetPasswordForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Reset Password')
-
