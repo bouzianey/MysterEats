@@ -26,8 +26,8 @@ class LoginForm(FlaskForm):
 
 class DisplayForm(FlaskForm):
     #TODO add adventure name restriction
-    adventureName = StringField('What is the adventure name ?', validators=[DataRequired()])
-    city = StringField('What is the city?', validators=[DataRequired()])
+    adventureName = StringField('Adventure Name', validators=[DataRequired()])
+    city = StringField('City', validators=[DataRequired()])
 
     preference = SelectField('Food Preferences',
                               choices=[('select', 'Select a choice...'), ('vegan', 'Vegetarian/Vegan'),
@@ -38,9 +38,9 @@ class DisplayForm(FlaskForm):
     #                     choices=[('select', 'Select a choice...'), ('maxprice1', '$'), ('maxprice2', '$$'),
     #                              ('maxprice3', '$$$'), ('maxprice4', '$$$$')], default='select')
 
-    radius = SelectField('What is the radius', choices = [('16000', '10 mi'),('24000','15 mi') ,( '32000','20 mi') ,
+    radius = SelectField('Distance', choices = [('16000', '10 mi'),('24000','15 mi') ,( '32000','20 mi') ,
                                                           ( '40000','25 mi')],default='15000')
-    email_address = StringField('Email addresses', validators=[DataRequired()])
+    email_address = StringField('Email addresses')
     submit = SubmitField('Submit')
 
 class RegistrationForm(FlaskForm):
