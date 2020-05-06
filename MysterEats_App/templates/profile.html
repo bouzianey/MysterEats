@@ -26,13 +26,21 @@
                     </div>
             </div>
 
-            <div>
+            <div class ="adventure-gallery">
                 {% for user in query %}
-                    <p>
-                        <a class="" href="{{ url_for('summary', adv_id=user[2].adventureID) }}">{{ user[2].name}} </a>
-                        - {{user[2].date}}
-                    </p>
+                    <div class="gallery">
+                        <a href="{{ url_for('summary', adv_id=user[2].adventureID) }}">
+                            <img src="{{ url_for('static',filename='img/thisisatest.png') }}" alt="Sonic" width="375" height="400">
+                        </a>
+                        <div class="desc">
+                            <p>
+                                <a class="" href="{{ url_for('summary', adv_id=user[2].adventureID) }}">{{ user[2].name}} </a><br>
+                                {{user[2].date}}
+                            </p>
+                        </div>
+                    </div>
                 {% endfor %}
+
             </div>
             </div>
         </div>
