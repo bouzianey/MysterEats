@@ -1,7 +1,7 @@
 from MysterEats_App.Email import *
 from MysterEats_App.config import *
 from flask_login import login_user, current_user, logout_user, login_required
-from flask import render_template, url_for, flash, redirect, request
+from flask import render_template, url_for, flash, redirect, request, abort
 from MysterEats_App import app, db, bcrypt
 from MysterEats_App.forms import *
 from MysterEats_App.models import *
@@ -10,7 +10,16 @@ from MysterEats_App.user_util import *
 import json
 
 
+@app.errorhandler(404)
+def page_not_found(e):
+    # note that we set the 404 status explicitly
+    return render_template('404.html'), 404
 
+
+@app.errorhandler(403)
+def forbidden_access(e):
+    # note that we set the 404 status explicitly
+    return render_template('403.html'), 403
 
 
 @app.route('/')
@@ -23,35 +32,35 @@ def adventure():
 @app.route('/adventure/inputs/<int:adv_id>', methods=['GET', 'POST'])
 @login_required
 def adv_inputs(adv_id):
-
     form = DisplayForm()
 
     if form.validate_on_submit():
 
-        location= form.city.data
-        preference= form.preference.data
-        radius= form.radius.data
+        location = form.city.data
+        preference = form.preference.data
+        radius = form.radius.data
         email = form.email_address.data
         adventureName = form.adventureName.data
         RECIPIENTS = [email]
 
-        restaurant_obj = SearchRestaurant(location,preference,radius)
+        restaurant_obj = SearchRestaurant(location, preference, radius)
         restaurant_details = restaurant_obj.get_best_restaurant()
 
-        destination = str(restaurant_details['geometry']['location']['lat']) +','+ str(restaurant_details['geometry']['location']['lng'])
+        destination = str(restaurant_details['geometry']['location']['lat']) + ',' + str(
+            restaurant_details['geometry']['location']['lng'])
 
-
-        direction_obj = Directions(" ",destination)
+        direction_obj = Directions(" ", destination)
         route = direction_obj.get_directions()
 
-        address_dest = str(restaurant_details['formatted_address']).replace(' ','+')
-        current_address = str(restaurant_obj.get_current_location()).replace(' ','+')
+        address_dest = str(restaurant_details['formatted_address']).replace(' ', '+')
+        current_address = str(restaurant_obj.get_current_location()).replace(' ', '+')
 
-        uber_obj = Uber(" "," "," ",restaurant_details['geometry']['location']['lat'],restaurant_details['geometry']['location']['lng'],restaurant_details['formatted_address'])
+        uber_obj = Uber(" ", " ", " ", restaurant_details['geometry']['location']['lat'],
+                        restaurant_details['geometry']['location']['lng'], restaurant_details['formatted_address'])
         uber_link = uber_obj.get_uber_link()
 
         if adv_id == 0:
-            adv_id = addAdventure(current_user.id, adventureName )
+            adv_id = addAdventure(current_user.id, adventureName)
         else:
             adv_id = int(adv_id)
             q = db.session.query(User).filter(UserAdventure.adventureID == adv_id).all()
@@ -60,27 +69,34 @@ def adv_inputs(adv_id):
 
         res_id = addRestaurant(restaurant_details)
         addAdventureRestaurant(adv_id, res_id)
-        restaurant_details['formatted_address'] = restaurant_details['formatted_address'].replace(',',' ')
-        restaurant_details['name'] = restaurant_details['name'].replace('\'',' ')
+        restaurant_details['formatted_address'] = restaurant_details['formatted_address'].replace(',', ' ')
+        restaurant_details['name'] = restaurant_details['name'].replace('\'', ' ')
 
+        # # Original
+        # if RECIPIENTS:
+        #     send_email(ADMINS[0], RECIPIENTS, restaurant_details, adv_id)
+
+        # Paul's multiple email fix
         if RECIPIENTS:
+            RECIPIENTS = email.split(";")
             send_email(ADMINS[0], RECIPIENTS, restaurant_details, adv_id)
 
-        return render_template('directions.html',adv_id = adv_id,  host = "yes", form=form, restaurant = restaurant_details , route=route, address_dest = address_dest, current_address = current_address , uber_link = uber_link, email=email)
+        return render_template('directions.html', adv_id=adv_id, host="yes", form=form, restaurant=restaurant_details,
+                               route=route, address_dest=address_dest, current_address=current_address,
+                               uber_link=uber_link, email=email)
     else:
-        return render_template('adv_inputs.html',adv_id = adv_id, form=form)
+        return render_template('adv_inputs.html', adv_id=adv_id, form=form)
 
 
 @app.route('/adventure/following/<host>/<restaurant>/<int:adv_id>', methods=['GET', 'POST'])
 @login_required
 def following( host,restaurant, adv_id):
 
-    #convert restaurant details from a string to a dict
+    # convert restaurant details from a string to a dict
     restaurant_format = restaurant.replace('\'','\"')
     restaurant_dict = json.loads(restaurant_format)
 
     return render_template('following.html', host = host, restaurant = restaurant_dict, adv_id = adv_id )
-
 
 
 @app.route('/adventure/directions/<restaurant>/<int:adv_id>', methods=['GET', 'POST'])
@@ -115,25 +131,44 @@ def directions(restaurant,adv_id):
 
 
 @app.route('/adventure/summary/<int:adv_id>', methods=['GET', 'POST'])
+@login_required
 def summary(adv_id):
 
+    correct_user = False
     form = CommentPost()
-    adv = Adventure.query.get_or_404(adv_id)
-    dic = get_summary(adv_id)
+
+    # 404 error if adventure doesn't exist
+    if Adventure.query.get(adv_id) is None:
+        abort(404)
+
+    # retrieves the current page number
+    page = request.args.get('page', 1, type=int)
+
+    # retrieves summary dictionary
+    dic = get_summary(adv_id, page)
+
+    # Checks if user is a part of the adventure
+    for user in dic['attendees']:
+        if current_user.id == user['id']:
+            correct_user = True
+
+    if correct_user == False:
+        flash('You do not have access to that page', 'danger')
+        abort(403)
 
     if form.validate_on_submit():
 
         picture_file = None
         if form.comment_pic.data:
-            picture_file = save_picture(form.comment_pic.data)
+            picture_file = save_picture(form.comment_pic.data, filepath='static\comment_pics', width=1000, height=1000)
 
-        comment = Comment(adventureID=adv.adventureID, userID=current_user.id, comment=form.content.data, photo=picture_file)
+        comment = Comment(adventureID=adv_id, userID=current_user.id, comment=form.content.data, photo=picture_file)
         db.session.add(comment)
         db.session.commit()
 
-        return redirect(url_for('summary', adv_id=adv.adventureID))
+        return redirect(url_for('summary', adv_id=adv_id))
 
-    return render_template('summary.html', adv=adv, dic=dic, form=form)
+    return render_template('summary.html', dic=dic, form=form)
 
 
 @app.route('/about')
@@ -172,7 +207,7 @@ def signup():
     # adds new user to the database
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user = User(email=form.email.data, password=hashed_password)
+        user = User(email=form.email.data, password=hashed_password, first_name=form.fname.data, last_name=form.lname.data)
         db.session.add(user)
         db.session.commit()
         flash('Your account has been created! You can now create an adventure!', 'success')
@@ -183,8 +218,12 @@ def signup():
 @app.route('/profile')
 @login_required
 def profile():
-
-    q = db.session.query(User, UserAdventure, Adventure).filter(User.id == UserAdventure.userID) .filter(UserAdventure.adventureID == Adventure.adventureID) .filter(User.id == current_user.id).all()
+    page = request.args.get('page', 1 ,type=int)
+    q = db.session.query(User, UserAdventure, Adventure).filter(User.id == UserAdventure.userID)\
+        .filter(UserAdventure.adventureID == Adventure.adventureID)\
+        .filter(User.id == current_user.id)\
+        .order_by(Adventure.date.desc())\
+        .paginate(page=page, per_page=5)
     image_file = url_for('static', filename='profile_pics/' + current_user.profile_pic)
     return render_template('profile.html', query=q, image_file=image_file)
 
@@ -197,7 +236,7 @@ def settings():
     if form.validate_on_submit():
 
         if form.profile_pic.data:
-            picture_file = save_picture(form.profile_pic.data)
+            picture_file = save_picture(form.profile_pic.data, filepath='static\profile_pics', width=125, height=125)
             current_user.profile_pic = picture_file
 
         if form.email.data:
@@ -212,6 +251,7 @@ def settings():
         if form.lname.data != '':
             current_user.last_name = form.lname.data
         db.session.commit()
+        flash('Updated!', 'success')
         return redirect(url_for('profile'))
 
     return render_template('settings.html', form=form)
@@ -220,6 +260,7 @@ def settings():
 @app.route('/logout')
 def logout():
     logout_user()
+    flash('User Logged off!', 'info')
     return redirect(url_for('adventure'))
 
 @app.route("/reset_password", methods=['GET', 'POST'])

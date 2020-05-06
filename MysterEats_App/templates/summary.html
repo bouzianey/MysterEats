@@ -186,6 +186,18 @@
 
     <h4>Comments</h4>
 
+    {% for page_num in dic['pages'] %}
+        {%  if page_num %}
+            {%  if dic['curr_page'] == page_num %}
+                <a class="btn btn-info mb-4" href="{{ url_for('summary', adv_id=1, page=page_num) }}">{{ page_num }}</a>
+            {% else %}
+                <a class="btn btn-outline-info mb-4" href="{{ url_for('summary', adv_id=1, page=page_num) }}">{{ page_num }}</a>
+            {% endif %}
+        {% else %}
+            ...
+        {% endif %}
+    {% endfor %}
+
     {% for i in dic['comments'] %}
 
         <div class="media-body">
@@ -200,7 +212,7 @@
 
             {% if i['content_photo'] %}
 
-                <img src="{{ url_for('static', filename='profile_pics/' + i['content_photo']) }}" class="rounded-circle account-img">
+                <img src="{{ url_for('static', filename='comment_pics/' + i['content_photo']) }}" class="img-fluid">
 
             {% endif %}
 
