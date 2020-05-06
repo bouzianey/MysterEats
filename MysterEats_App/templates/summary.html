@@ -206,7 +206,7 @@
 
                 <img src="{{ url_for('static', filename='profile_pics/' + i['profile_pic']) }}" class="rounded-circle account-img">
 
-                {{i['first_name']}} {{ i['last_name']}} - {{ i['date'].strftime('%c')[:19] }}</p>
+                {{i['first_name']}} {{ i['last_name']}} - {{ i['date'].strftime('%I:%M %p - %m/%d/%Y') }}</p>
 
             <p class="article-content"> {{ i['content']}}</p>
 

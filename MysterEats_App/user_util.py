@@ -1,4 +1,5 @@
 from MysterEats_App import db
+from datetime import datetime, timedelta
 import secrets
 from PIL import Image
 from flask import url_for, current_app
@@ -50,7 +51,7 @@ def get_summary(adventureID, page):
 # Adding Adventure id, name and date object
     dic['adventure']['id'] = q[0][2].adventureID
     dic['adventure']['name'] = q[0][2].name
-    dic['adventure']['date'] = q[0][2].date
+    dic['adventure']['date'] = q[0][2].date - timedelta(hours=4)
     dic['adventure']['host_id'] = q[0][2].host
 
 # Adding Attendees
@@ -90,7 +91,7 @@ def get_summary(adventureID, page):
     # Adding Comments
     for i in c.items:
         dic['comments'].append({'user_id': i[0].id, 'first_name': i[0].first_name, 'last_name': i[0].last_name,
-                                'date': i[2].date, 'profile_pic': i[0].profile_pic, 'content': i[2].comment,
+                                'date': i[2].date - timedelta(hours=4), 'profile_pic': i[0].profile_pic, 'content': i[2].comment,
                                 'content_photo': i[2].photo})
 
     # Adding pages
