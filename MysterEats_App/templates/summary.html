@@ -189,9 +189,9 @@
     {% for page_num in dic['pages'] %}
         {%  if page_num %}
             {%  if dic['curr_page'] == page_num %}
-                <a class="btn btn-info mb-4" href="{{ url_for('summary', adv_id=1, page=page_num) }}">{{ page_num }}</a>
+                <a class="btn btn-info mb-4" href="{{ url_for('summary', adv_id=dic['adventure']['id'], page=page_num) }}">{{ page_num }}</a>
             {% else %}
-                <a class="btn btn-outline-info mb-4" href="{{ url_for('summary', adv_id=1, page=page_num) }}">{{ page_num }}</a>
+                <a class="btn btn-outline-info mb-4" href="{{ url_for('summary', adv_id=dic['adventure']['id'], page=page_num) }}">{{ page_num }}</a>
             {% endif %}
         {% else %}
             ...

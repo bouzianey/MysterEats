@@ -210,7 +210,7 @@ def signup():
         user = User(email=form.email.data, password=hashed_password, first_name=form.fname.data, last_name=form.lname.data)
         db.session.add(user)
         db.session.commit()
-        flash('Your account has been created! You can now create an adventure!', 'success')
+        flash('Your account has been created! You can now login!', 'success')
         return redirect(url_for('login'))
     return render_template('signup.html', form=form)
 
