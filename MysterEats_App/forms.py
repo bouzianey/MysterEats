@@ -6,6 +6,10 @@ from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationE
 from MysterEats_App.models import User
 
 
+class MessageForm(FlaskForm):
+    message = TextAreaField('Message', validators=[DataRequired(), Length(min=0, max=140)])
+    submit = SubmitField('Submit')
+
 class CommentPost(FlaskForm):
 
     content = TextAreaField('Post Content', validators=[DataRequired()])

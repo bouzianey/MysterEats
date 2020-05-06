@@ -2,7 +2,8 @@ from datetime import datetime
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from MysterEats_App import app, db, login_manager
 from flask_login import UserMixin
-
+from time import time
+import json
 
 
 @login_manager.user_loader
@@ -19,6 +20,17 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(60), nullable=False)
     profile_pic = db.Column(db.String(20), nullable=False, default='default.jpg')
     user_adventure = db.relationship('UserAdventure', backref='users')
+
+    messages_sent = db.relationship('Message',
+                                    foreign_keys='Message.sender_id',
+                                    backref='author', lazy='dynamic')
+    messages_received = db.relationship('Message',
+                                        foreign_keys='Message.recipient_id',
+                                        backref='recipient', lazy='dynamic')
+    last_message_read_time = db.Column(db.DateTime)
+
+    notifications = db.relationship('Notification', backref='user',
+                                    lazy='dynamic')
 
     def __repr__(self):
 
@@ -39,6 +51,15 @@ class User(db.Model, UserMixin):
             return None
         return User.query.get(user_id)
 
+    def new_messages(self):
+        last_read_time = self.last_message_read_time or datetime(1900, 1, 1)
+        return Message.query.filter_by(recipient=self).filter(Message.timestamp > last_read_time).count()
+
+    def add_notification(self, name, data):
+        self.notifications.filter_by(name=name).delete()
+        n = Notification(name=name, payload_json=json.dumps(data), user=self)
+        db.session.add(n)
+        return n
 
 class Adventure(db.Model):
 
@@ -110,3 +131,23 @@ class Comment(db.Model):
     def __repr__(self):
         return f"Comment('{self.commentID}','{self.userID}','{self.comment}','{self.date}','"
 
+class Message(db.Model):
+
+    id = db.Column(db.Integer, primary_key=True)
+    sender_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    recipient_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    body = db.Column(db.String(140))
+    timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+
+    def __repr__(self):
+        return '{}'.format(self.body)
+
+class Notification(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(128), index=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    timestamp = db.Column(db.Float, index=True, default=time)
+    payload_json = db.Column(db.Text)
+
+    def get_data(self):
+        return json.loads(str(self.payload_json))

@@ -7,7 +7,7 @@ os.environ['EMAIL_USERNAME'] =  ''#'testing.paulo@gmail.com'
 os.environ['EMAIL_PASSWORD'] =  ''#'oisffloohzgomkc'
 
 # administrator list
-ADMINS = ['']
+ADMINS = ['yacinebouziane2@gmail.com']
 
 mail_settings = {
     "MAIL_SERVER": 'smtp.gmail.com',
@@ -17,3 +17,5 @@ mail_settings = {
     "MAIL_USERNAME": os.environ['EMAIL_USERNAME'],
     "MAIL_PASSWORD": os.environ['EMAIL_PASSWORD']
 }
+
+POSTS_PER_PAGE = 3
