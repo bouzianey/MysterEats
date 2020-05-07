@@ -40,17 +40,17 @@ class SearchRestaurant:
 
     def get_current_location(self):
 
-        gmaps = Client(key = os.environ['API_KEY'])
+        gmaps = Client(key = os.environ['key'])
         origin = gmaps.geolocate()
         return str(origin['location']['lat'])+','+str(origin['location']['lng'])
 
     def get_best_restaurant(self):
 
-        gmaps = Client(key = os.environ['API_KEY'])
+        gmaps = Client(key = os.environ['key'])
         endpoint = 'https://maps.googleapis.com/maps/api/place/textsearch/json?'
 
         #assign inputs
-        api_key = os.environ['API_KEY']
+        api_key = os.environ['key']
         type='restaurant'
         if self.preference == "select":
             preference = "-fastfood"
@@ -114,7 +114,7 @@ class Directions:
     def get_origin(self):
 
         # Define the Client
-        gmaps = Client(key = os.environ['API_KEY'])
+        gmaps = Client(key = os.environ['key'])
         location = gmaps.geolocate()
         return str(location['location']['lat'])+','+ str(location['location']['lng'])
 
@@ -126,7 +126,7 @@ class Directions:
         self.origin = self.get_origin()
         # Google MapsDdirections API endpoint
         endpoint = 'https://maps.googleapis.com/maps/api/directions/json?'
-        api_key = os.environ['API_KEY']
+        api_key = os.environ['key']
 
         # Building the URL for the request
         nav_request = 'origin={}&destination={}&key={}'.format(self.origin, self.destination, api_key)
@@ -170,7 +170,7 @@ class Uber:
     def get_origin_latlng(self):
 
         # Define the Client
-        gmaps = Client(key = os.environ['API_KEY'])
+        gmaps = Client(key = os.environ['key'])
         origin = gmaps.geolocate()
         self.pickup_lat = str(origin['location']['lat'])
         self.pickup_lng = str(origin['location']['lng'])
@@ -178,7 +178,7 @@ class Uber:
     def get_origin_address(self):
 
         # Define the Client
-        gmaps = Client(key = os.environ['API_KEY'])
+        gmaps = Client(key = os.environ['key'])
         location = self.pickup_lat +','+ self.pickup_lng
         pickup_location = gmaps.reverse_geocode(latlng=location)
         self.pickup_address = pickup_location[0]['formatted_address']

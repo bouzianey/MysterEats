@@ -1,0 +1,127 @@
+.page-wrap{
+	width:100%;
+	margin:auto;
+	max-width:375px;
+	min-height:812px;
+	position:relative;
+
+}
+
+/* Profile Card */
+.wrapper {
+  width: 375px;
+  height: 405px;
+  background: #FDFEFF;
+  transition: background 0.6s ease;
+  border-radius: 10px;
+  padding: 20px 20px 20px 20px;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.1);
+}
+
+.wrapper .profile {
+  margin-top: 2.2em;
+  position: relative;
+}
+
+.wrapper .profile:after {
+  width: 100%;
+  height: 1px;
+  content: " ";
+  display: block;
+  margin-top: 1.3em;
+  background: #E9EFF6;
+}
+
+.wrapper .profile .thumbnail {
+  width: 124px;
+  height: 124px;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1.5em;
+  border-radius: 100%;
+  box-shadow: 0 13px 26px rgba(0, 0, 0, 0.2), 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+.wrapper .profile .name {
+  color: #2D354A;
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+}
+.wrapper .profile .title {
+  color: #7C8097;
+  font-size: 0.75em;
+  font-weight: 300;
+  text-align: center;
+  padding-top: 0.5em;
+  padding-bottom: 0.7em;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.wrapper .profile .btn {
+  color: #fff;
+  width: 130px;
+  height: 42px;
+  outline: none;
+  border: none;
+  display: block;
+  cursor: pointer;
+  font-weight: 300;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 70px;
+  box-shadow: 0 13px 26px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.16);
+  background: linear-gradient(to bottom right, #C90A6D, #FF48A0);
+}
+
+.wrapper .social-icons {
+  display: flex;
+  margin-top: 0.5em;
+  justify-content: space-between;
+}
+
+.wrapper .social-icons .icon {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.wrapper .social-icons .icon a {
+  color: #fff;
+  width: 60px;
+  height: 60px;
+  font-size: 28px;
+  line-height: 60px;
+  text-align: center;
+  border-radius: 30px;
+  box-shadow: 0 13px 26px rgba(0, 0, 0, 0.2), 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Adventures Gallery */
+div.adventure-gallery {
+  padding-top: 30px;
+}
+
+div.gallery {
+  margin: 5px;
+  border: 1px solid #ccc;
+  float: left;
+  max-width: 375px;
+}
+
+div.gallery:hover {
+  border: 1px solid #777;
+}
+
+div.gallery img {
+  width: 100%;
+  height: 150px;
+}
+
+div.desc {
+  padding: 15px;
+  text-align: center;
+}

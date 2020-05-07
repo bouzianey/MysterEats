@@ -1,17 +1,41 @@
 {% extends "layout.html "%}
 {% block content %}
-    <head>
-        <style>
-            body {font-family: Arial, Helvetica, sans-serif;}
-            * {box-sizing: border-box;}
-        </style>
-    </head>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/adv_inputs.css') }}">
+
+    <!-- Loading Screen -->
+    <script>
+        function dim(bool)
+        {
+            if (typeof bool=='undefined') bool=true; // so you can shorten dim(true) to dim()
+                document.getElementById('dimmer').style.display=(bool?'block':'none');
+        }
+        dim(true); // on
+        dim(false); // off
+
+        function showDiv() {
+            document.getElementById('loader').style.display = "block";
+        }
+    </script>
+
+    <!-- Autocomplete Script -->
+    <script>
+        var placeSearch, autocomplete;
+        function initAutocomplete() {
+            autocomplete = new google.maps.places.Autocomplete(
+                document.getElementById('autocomplete'), {types: ['(cities)']});
+        }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC-_LI36XAW8G7i3Esc6nVE9CDWjIqV1XU&libraries=places&callback=initAutocomplete"
+        async defer></script>
+
+<body>
+<div class="page-wrap">
 
     <div class="content-section" align="center">
         <form method="POST" action="">
             {{ form.hidden_tag() }}
             <fieldset class="form-group">
-                <legend align="center" class="border-bottom mb-4">BECOME THE VERY BEST THERE EVER WAS.</legend>
+                <legend align="center" class="border-bottom mb-4">Start an Adventure.</legend>
                 <div class="form-group" id="adv_name_input">
                     {{ form.adventureName.label(class="form-control-label") }}
                     {% if form.adventureName.errors %}
@@ -35,7 +59,7 @@
                             {% endfor %}
                         </div>
                     {% else %}
-                        {{ form.city(class="form-control form-control-lg") }}
+                        {{ form.city(id="autocomplete", type="text", placeholder="Enter a city", class="form-control form-control-lg") }}
                     {% endif %}
                 </div>
                 <div class="form-group">
@@ -82,10 +106,15 @@
             </fieldset>
 
             <div class="form-group">
-                {{ form.submit(class="btn btn-outline-info") }}
+                {{ form.submit(onclick="dim(), showDiv()", class="btn btn-outline-info") }}
             </div>
+
+            <div id="dimmer"></div>
+            <div id="loader" style="display:none;" class="loader"></div>
         </form>
     </div>
+</div>
+</body>
     <script>
 
         document.addEventListener('DOMContentLoaded', function privilege() {

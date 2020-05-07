@@ -1,4 +1,5 @@
 from flask_wtf import FlaskForm
+import wtforms
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, SelectField, TextAreaField
 from flask_wtf.file import FileField, FileAllowed
 from flask_login import current_user
@@ -12,12 +13,14 @@ class MessageForm(FlaskForm):
 
 class CommentPost(FlaskForm):
 
-    content = TextAreaField('Post Content', validators=[DataRequired()])
+    content = TextAreaField('Post Content', validators=[DataRequired(), Length(max=100)])
     comment_pic = FileField('Post Picture', validators=[FileAllowed(['jpg', 'png'])])
     submit = SubmitField("Submit!")
 
 class RegistrationForm(FlaskForm):
-    email = StringField('Email', validators=[DataRequired(), Email()])
+    email = StringField('Email', validators=[DataRequired(), Email(), Length(max=30)])
+    fname = StringField('First Name', validators=[DataRequired(), Length(min=2, max=20)])
+    lname = StringField('Last Name', validators=[DataRequired(), Length(min=2, max=20)])
     password = PasswordField('Password', validators=[DataRequired()])
     confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField("Sign Up!")
@@ -30,9 +33,8 @@ class LoginForm(FlaskForm):
 
 
 class DisplayForm(FlaskForm):
-    #TODO add adventure name restriction
-    adventureName = StringField('What is the adventure name ?', validators=[Optional()])
-    city = StringField('What is the city?', validators=[DataRequired()])
+    adventureName = StringField('Adventure Name', validators=[Optional(), Length(min=5, max=20)])
+    city = StringField('City', validators=[DataRequired()])
 
     preference = SelectField('Food Preferences',
                               choices=[('select', 'Select a choice...'), ('vegan+vegetarian', 'Vegetarian/Vegan'),
@@ -43,17 +45,10 @@ class DisplayForm(FlaskForm):
     #                     choices=[('select', 'Select a choice...'), ('maxprice1', '$'), ('maxprice2', '$$'),
     #                              ('maxprice3', '$$$'), ('maxprice4', '$$$$')], default='select')
 
-    radius = SelectField('What is the radius', choices = [('16000', '10 mi'),('24000','15 mi') ,( '32000','20 mi') ,
+    radius = SelectField('Distance', choices = [('16000', '10 mi'),('24000','15 mi') ,( '32000','20 mi') ,
                                                           ( '40000','25 mi')],default='15000')
-    email_address = StringField('Email addresses', validators=[Optional()])
+    email_address = StringField('Email addresses', validators=[Optional()], render_kw={"placeholder": "test@email.com;test2@email"})
     submit = SubmitField('Submit')
-
-class RegistrationForm(FlaskForm):
-
-    email = StringField('Email', validators=[DataRequired(), Email()])
-    password = PasswordField('Password', validators=[DataRequired()])
-    confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
-    submit = SubmitField("Sign Up!")
 
 
 class LoginForm(FlaskForm):
@@ -63,11 +58,12 @@ class LoginForm(FlaskForm):
     remember = BooleanField('Remember Me')
     submit = SubmitField("Login!")
 
+
 class SettingsForm(FlaskForm):
 
-    email = StringField('Email', validators=[Optional(), Email()])
-    fname = StringField('First Name', validators=[Optional()])
-    lname = StringField('Last Name', validators=[Optional()])
+    email = StringField('Email', validators=[Optional(), Email(), Length(max=30)])
+    fname = StringField('First Name', validators=[Optional(), Length(min=2, max=20)])
+    lname = StringField('Last Name', validators=[Optional(), Length(min=2, max=20)])
     profile_pic = FileField('Profile Picture', validators=[Optional(), FileAllowed(['jpg', 'png'])])
     # password = PasswordField('Password', validators=[DataRequired()])
     # confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
@@ -107,3 +103,4 @@ class ResetPasswordForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
     submit = SubmitField('Reset Password')
+

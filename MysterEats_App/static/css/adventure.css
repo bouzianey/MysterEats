@@ -1,0 +1,48 @@
+/* Adventure Page */
+.page-wrap{
+  width:100%;
+  margin:auto;
+  max-width:375px;
+  min-height:812px;
+  position:relative;
+  background-color: darkred;
+  box-shadow:0 12px 15px 0 rgba(0,0,0,.24),0 17px 50px 0 rgba(0,0,0,.19);
+}
+
+.logo {
+    position: absolute;
+    left: 50%;
+    top: 10%;
+    transform: translateX(-50%) translateY(-10%);
+}
+.button {
+  background: limegreen;
+  width: 180px;
+  padding: 4px 0;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  border-radius: 3px;
+}
+.button a {
+  font-family: "Roboto";
+  text-align: center;
+  text-transform: uppercase;
+  color: #FFF;
+  user-select: none;
+}
+.button:hover {
+  cursor: pointer;
+}
+.button:after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 100%;
+  height: 10%;
+  border-radius: 50%;
+  background-color: #927608;
+  opacity: 0.4;
+  bottom: -30px;
+}

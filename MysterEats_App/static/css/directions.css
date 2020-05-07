@@ -1,0 +1,161 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,600,700);
+
+.page-wrap{
+	width:100%;
+	margin:auto;
+	max-width:375px;
+	min-height:812px;
+	position:relative;
+	box-shadow:0 12px 15px 0 rgba(0,0,0,.24),0 17px 50px 0 rgba(0,0,0,.19);
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box;}
+
+/* The popup form - hidden by default */
+.form-popup {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  right: 15px;
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+}
+
+/* Add styles to the form container */
+.form-container {
+  max-width: 300px;
+  padding: 10px;
+  background-color: white;
+}
+
+ /* Set a style for the submit/login button */
+.form-container .btn {
+  background-color: #4CAF50;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom:10px;
+  opacity: 0.8;
+}
+
+/* Add a red background color to the cancel button */
+.form-container .cancel {
+  background-color: red;
+}
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover, .open-button:hover {
+  opacity: 1;
+}
+
+.host_buttons {
+  width: 100%;
+  display: none;
+  text-align: center;
+}
+
+/* General Buttons */
+.uber_button {
+  width: 185px;
+  height: 40px;
+  background: linear-gradient(to bottom, #32CD32 0%, #228B22 100%); /* W3C */
+  border: none;
+  border-radius: 5px;
+  position: relative;
+  border-bottom: 4px solid #016f01;
+  color: #fbfbfb;
+  font-weight: 600;
+  font-family: 'Open Sans', sans-serif;
+  text-shadow: 1px 1px 1px rgba(0,0,0,.4);
+  font-size: 15px;
+  text-align: left;
+  text-indent: 5px;
+  box-shadow: 0px 3px 0px 0px rgba(0,0,0,.2);
+  cursor: pointer;
+
+/* Just for presentation */
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+.uber_button:active {
+  box-shadow: 0px 2px 0px 0px rgba(0,0,0,.2);
+  top: 1px;
+}
+
+.uber_button:after {
+  content: "";
+  width: 0;
+  height: 0;
+  display: block;
+  border-top: 20px solid #016f01;
+  border-bottom: 20px solid #016f01;
+  border-left: 16px solid transparent;
+  border-right: 20px solid #016f01;
+  position: absolute;
+  opacity: 0.6;
+  right: 0;
+  top: 0;
+  border-radius: 0 5px 5px 0;
+}
+
+/* Button pointing left */
+
+button.back {
+  text-align: right;
+  padding-right: 12px;
+  box-sizing: border-box;
+}
+button.back:after {
+  content: "";
+  width: 0;
+  height: 0;
+  display: block;
+  border-top: 20px solid #187dbc;
+  border-bottom: 20px solid #187dbc;
+  border-right: 16px solid transparent;
+  border-left: 20px solid #187dbc;
+  position: absolute;
+  opacity: 0.6;
+  left: 0;
+  top: 0;
+  border-radius: 5px 0 0 5px;
+}
+
+/* Single buttons */
+
+button.site {
+  width: 40px;
+  text-align: center;
+  text-indent: 0;
+}
+button.site:after{
+  display: none;
+}
+
+
+
+
+
+/* Presentation stuff */
+.holder {
+  width: 400px;
+  background: #efefef;
+  padding: 30px 10px;
+  box-sizing: border-box;
+  margin: 0 auto;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.uber_button h1 {
+  font: 400 16px 'Open Sans';
+  text-transform: uppercase;
+  color: #999;
+  text-shadow: 1px 1px 1px #fff;
+  margin-bottom: 30px;
+}
