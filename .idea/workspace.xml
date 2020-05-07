@@ -2,21 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8718bff7-0f4e-4f35-87be-632d88db9be3" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/MysterEats_App/templates/reset_request.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MysterEats_App/templates/reset_token.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/MysterEats_App/user_util.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MysterEats_App/Email.py" beforeDir="false" afterPath="$PROJECT_DIR$/MysterEats_App/Email.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MysterEats_App/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/MysterEats_App/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MysterEats_App/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/MysterEats_App/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MysterEats_App/forms.py" beforeDir="false" afterPath="$PROJECT_DIR$/MysterEats_App/forms.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MysterEats_App/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/MysterEats_App/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MysterEats_App/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/MysterEats_App/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MysterEats_App/site.db" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/MysterEats_App/templates/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/MysterEats_App/templates/layout.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MysterEats_App/templates/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/MysterEats_App/templates/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MysterEats_App/templates/profile.html" beforeDir="false" afterPath="$PROJECT_DIR$/MysterEats_App/templates/profile.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MysterEats_App/templates/settings.html" beforeDir="false" afterPath="$PROJECT_DIR$/MysterEats_App/templates/settings.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,7 +22,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="testing" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -177,6 +163,7 @@
       <workItem from="1588010608335" duration="16500000" />
       <workItem from="1588107304081" duration="7171000" />
       <workItem from="1588177634285" duration="8634000" />
+      <workItem from="1588808594710" duration="2056000" />
     </task>
     <task id="LOCAL-00001" summary="Invitation ==&gt; Done&#10;Now you can invite a user to join an adventure">
       <created>1588109489178</created>
@@ -220,6 +207,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="303" y="0" key="CommitChangelistDialog2/0.0.1366.728@0.0.1366.728" timestamp="1588109488129" />
+    <state x="178" y="59" key="DiffContextDialog" timestamp="1588811881696">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="178" y="59" key="DiffContextDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1588811881696" />
     <state width="1323" height="12" key="GridCell.Tab.0.bottom" timestamp="1588187542347">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -264,6 +255,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state width="196" height="457" key="HiddenNamespacesPopup/0.0.1366.728@0.0.1366.728" timestamp="1587765630499" />
+    <state x="724" y="223" key="RollbackChangesDialog" timestamp="1588811843052">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="724" y="223" key="RollbackChangesDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1588811843052" />
     <state x="258" y="0" key="SettingsEditor" timestamp="1587682295401">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -282,6 +277,14 @@
       <screen x="0" y="0" width="1680" height="1010" />
     </state>
     <state x="0" y="0" width="1021" height="665" key="dock-window-1/0.0.1680.1010/-1920.-26.1920.1040@0.0.1680.1010" timestamp="1584385911105" />
+    <state x="723" y="308" key="git4idea.merge.GitMergeDialog" timestamp="1588808626944">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="723" y="308" key="git4idea.merge.GitMergeDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1588808626944" />
+    <state x="642" y="308" key="git4idea.merge.GitPullDialog" timestamp="1588811853750">
+      <screen x="0" y="0" width="1920" height="1040" />
+    </state>
+    <state x="642" y="308" key="git4idea.merge.GitPullDialog/0.0.1920.1040/-1920.0.1920.1040@0.0.1920.1040" timestamp="1588811853750" />
     <state x="346" y="49" width="672" height="678" key="search.everywhere.popup" timestamp="1588184607856">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
