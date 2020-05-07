@@ -1,14 +1,17 @@
 from MysterEats_App.Email import *
 from MysterEats_App.config import *
 from flask_login import login_user, current_user, logout_user, login_required
-from flask import render_template, url_for, flash, redirect, request, abort
+from flask import render_template, url_for, flash, redirect, request, abort, jsonify
 from MysterEats_App import app, db, bcrypt
 from MysterEats_App.forms import *
 from MysterEats_App.models import *
 from MysterEats_App.PlaceSearch import *
+from MysterEats_App.notify_user import send_message
 from MysterEats_App.user_util import *
 import json
-
+from MysterEats_App.forms import MessageForm
+from MysterEats_App.models import Message
+from MysterEats_App.config import *
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -39,9 +42,9 @@ def adv_inputs(adv_id):
         location = form.city.data
         preference = form.preference.data
         radius = form.radius.data
-        email = form.email_address.data
+        email_ad = form.email_address.data
         adventureName = form.adventureName.data
-        RECIPIENTS = [email]
+        RECIPIENTS = [email_ad]
 
         restaurant_obj = SearchRestaurant(location, preference, radius)
         restaurant_details = restaurant_obj.get_best_restaurant()
@@ -72,18 +75,21 @@ def adv_inputs(adv_id):
         restaurant_details['formatted_address'] = restaurant_details['formatted_address'].replace(',', ' ')
         restaurant_details['name'] = restaurant_details['name'].replace('\'', ' ')
 
-        # # Original
-        # if RECIPIENTS:
-        #     send_email(ADMINS[0], RECIPIENTS, restaurant_details, adv_id)
-
-        # Paul's multiple email fix
+        # Original
         if RECIPIENTS:
-            RECIPIENTS = email.split(";")
             send_email(ADMINS[0], RECIPIENTS, restaurant_details, adv_id)
+            send_message(email_ad, restaurant_details, adv_id)
+
+        # # TODO Paul's multiple email fix
+        # if RECIPIENTS:
+        #     RECIPIENTS = email_ad.split(";")
+        #     send_email(ADMINS[0], RECIPIENTS, restaurant_details, adv_id)
+        #     send_message(email_ad, restaurant_details, adv_id)
+
 
         return render_template('directions.html', adv_id=adv_id, host="yes", form=form, restaurant=restaurant_details,
                                route=route, address_dest=address_dest, current_address=current_address,
-                               uber_link=uber_link, email=email)
+                               uber_link=uber_link, email=email_ad)
     else:
         return render_template('adv_inputs.html', adv_id=adv_id, form=form)
 
@@ -260,7 +266,7 @@ def settings():
 @app.route('/logout')
 def logout():
     logout_user()
-    flash('User Logged off!', 'info')
+    # flash('User Logged off!', 'info')
     return redirect(url_for('adventure'))
 
 @app.route("/reset_password", methods=['GET', 'POST'])
@@ -302,3 +308,38 @@ def reset_token(token):
         flash('Your password has been updated!', 'success')
         return redirect(url_for('login'))
     return render_template('reset_token.html', title='Reset Password', form=form)
+
+@app.route('/notifications')
+@login_required
+def notifications():
+    since = request.args.get('since', 0.0, type=float)
+    notifications = current_user.notifications.filter(
+        Notification.timestamp > since).order_by(Notification.timestamp.asc())
+    return jsonify([{
+        'name': n.name,
+        'data': n.get_data(),
+        'timestamp': n.timestamp
+    } for n in notifications])
+
+
+@app.route('/user/<email_ad>')
+@login_required
+def user(email_ad):
+    user = User.query.filter_by(email=email_ad).first_or_404()
+    return render_template('user.html', user=user)
+
+
+@app.route('/messages')
+@login_required
+def messages():
+    current_user.last_message_read_time = datetime.utcnow()
+    current_user.add_notification('unread_message_count', 0)
+    db.session.commit()
+    page = request.args.get('page', 1, type=int)
+    messages = current_user.messages_received.order_by(Message.timestamp.desc()).paginate(page, POSTS_PER_PAGE, False)
+    next_url = url_for('messages', page=messages.next_num) \
+        if messages.has_next else None
+    prev_url = url_for('messages', page=messages.prev_num) \
+        if messages.has_prev else None
+    return render_template('messages.html', messages=messages.items,
+                           next_url=next_url, prev_url=prev_url)
