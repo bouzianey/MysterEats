@@ -69,12 +69,14 @@ def adv_inputs(adv_id):
             q = db.session.query(User).filter(UserAdventure.adventureID == adv_id).all()
             if q:
                 RECIPIENTS = [q[1].email]
+                email_ad = q[1].email
 
         res_id = addRestaurant(restaurant_details)
         addAdventureRestaurant(adv_id, res_id)
         restaurant_details['formatted_address'] = restaurant_details['formatted_address'].replace(',', ' ')
         restaurant_details['name'] = restaurant_details['name'].replace('\'', ' ')
 
+        # TODO inv email optional
         # Original
         if RECIPIENTS:
             send_email(ADMINS[0], RECIPIENTS, restaurant_details, adv_id)
@@ -189,6 +191,7 @@ def login():
         return redirect(url_for('adventure'))
 
     form = LoginForm()
+    form2 = RegistrationForm()
 
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
@@ -200,7 +203,16 @@ def login():
             return redirect(next_page) if next_page else redirect(url_for('adventure'))
         else:
             flash('Login Failed. Check password is correct', 'danger')
-    return render_template('login.html', form=form)
+
+        # adds new user to the database
+        if form2.validate_on_submit():
+            hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+            user = User(email=form2.email.data, password=hashed_password, first_name=form2.fname, last_name=form2.lname)
+            db.session.add(user)
+            db.session.commit()
+            flash('Your account has been created! You can now create an adventure!', 'success')
+            return redirect(url_for('login'))
+    return render_template('login.html', form=form, form2=form2)
 
 
 @app.route('/signup', methods=['GET', 'POST'])
@@ -221,17 +233,43 @@ def signup():
     return render_template('signup.html', form=form)
 
 
-@app.route('/profile')
+@app.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
+    form = SettingsForm()
     page = request.args.get('page', 1 ,type=int)
+
     q = db.session.query(User, UserAdventure, Adventure).filter(User.id == UserAdventure.userID)\
         .filter(UserAdventure.adventureID == Adventure.adventureID)\
         .filter(User.id == current_user.id)\
         .order_by(Adventure.date.desc())\
         .paginate(page=page, per_page=5)
     image_file = url_for('static', filename='profile_pics/' + current_user.profile_pic)
-    return render_template('profile.html', query=q, image_file=image_file)
+
+    if form.validate_on_submit():
+
+        if form.profile_pic.data:
+            picture_file = save_picture(form.profile_pic.data)
+            current_user.profile_pic = picture_file
+
+        if form.email.data:
+            # checks if user exists
+            user = User.query.filter_by(email=form.email.data).first()
+            if user:
+                flash('Email Already Exists', 'danger')
+            else:
+                current_user.email = form.email.data
+        if form.fname.data != '':
+            current_user.first_name = form.fname.data
+        if form.lname.data != '':
+            current_user.last_name = form.lname.data
+        db.session.commit()
+        return redirect(url_for('profile'))
+
+    return render_template('profile.html', query=q, image_file=image_file, form=form)
+
+
+
 
 
 @app.route('/profile/settings', methods=['GET', 'POST'])

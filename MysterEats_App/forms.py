@@ -33,8 +33,8 @@ class LoginForm(FlaskForm):
 
 
 class DisplayForm(FlaskForm):
-    adventureName = StringField('What is the adventure name ?', validators=[Optional(), Length(min=5, max=20)])
-    city = StringField('What is the city?', validators=[DataRequired()])
+    adventureName = StringField('Adventure Name', validators=[Optional(), Length(min=5, max=20)])
+    city = StringField('City', validators=[DataRequired()])
 
     preference = SelectField('Food Preferences',
                               choices=[('select', 'Select a choice...'), ('vegan+vegetarian', 'Vegetarian/Vegan'),
@@ -45,7 +45,7 @@ class DisplayForm(FlaskForm):
     #                     choices=[('select', 'Select a choice...'), ('maxprice1', '$'), ('maxprice2', '$$'),
     #                              ('maxprice3', '$$$'), ('maxprice4', '$$$$')], default='select')
 
-    radius = SelectField('What is the radius', choices = [('16000', '10 mi'),('24000','15 mi') ,( '32000','20 mi') ,
+    radius = SelectField('Distance', choices = [('16000', '10 mi'),('24000','15 mi') ,( '32000','20 mi') ,
                                                           ( '40000','25 mi')],default='15000')
     email_address = StringField('Email addresses', validators=[Optional()], render_kw={"placeholder": "test@email.com;test2@email"})
     submit = SubmitField('Submit')
