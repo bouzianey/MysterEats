@@ -1,50 +1,57 @@
 {% extends "layout.html "%}
+
 {% block content %}
 
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/profile.css') }}">
+    <h1>ACCOUNT PAGE</h1>
 
-    <div class="page-wrap">
-    <div class="login-wrap">
-        <div class="login-html">
-            <div class="wrapper">
-                <div class="profile">
-                    <img src="{{ image_file }}" class="thumbnail">
-                    <h3 class="name">
-                        {% if current_user.first_name != None and current_user.last_name != None %}
-                            {{ current_user.first_name }} {{ current_user.last_name }}
-                        {% else %}
-                            <h5> Please add a first and last name in the settings page.</h5>
-                        {% endif %}
-                    </h3>
-                    <p class="title"> {{ current_user.email }} </p>
-                    <a class = "btn" href="{{ url_for('settings') }}">Settings</a>
-                </div>
+    <div class="media">
 
-                <div class="social-icons">
-                    <div class="icon">
-                        <h4>Adventures</h4>
-                    </div>
-            </div>
+        <img src="{{ image_file }}" class="rounded-circle account-img">
 
-            <div class ="adventure-gallery">
-                {% for user in query %}
-                    <div class="gallery">
-                        <a href="{{ url_for('summary', adv_id=user[2].adventureID) }}">
-                            <img src="{{ url_for('static',filename='img/thisisatest.png') }}" alt="Sonic" width="375" height="400">
-                        </a>
-                        <div class="desc">
-                            <p>
-                                <a class="" href="{{ url_for('summary', adv_id=user[2].adventureID) }}">{{ user[2].name}} </a><br>
-                                {{user[2].date}}
-                            </p>
-                        </div>
-                    </div>
-                {% endfor %}
+        <div class="media-body">
 
-            </div>
-            </div>
+            <h1>{{ current_user.email }}</h1>
+
+            {% if current_user.first_name != None and current_user.last_name != None %}
+
+                <h2>{{ current_user.first_name }} {{ current_user.last_name }}</h2>
+
+            {% else %}
+
+                <h5> Please add a first and last name in the settings page.</h5>
+
+            {% endif %}
+
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{{ url_for('settings') }}">Settings</a>
+
         </div>
+
     </div>
-    </div>
-    </div>
+
+    {% for user in query.items %}
+
+        <p>
+
+            <a class="" href="{{ url_for('summary', adv_id=user[2].adventureID) }}">{{ user[2].name}} </a>
+
+            - {{user[2].date.strftime('%B %d, %Y')}}
+
+        </p>
+
+    {% endfor %}
+
+    <!-- pagination and create links for pages -->
+    {% for page_num in query.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2)  %}
+        {%  if page_num %}
+            {%  if query.page == page_num %}
+                <a class="btn btn-info mb-4" href="{{ url_for('profile', page=page_num) }}">{{ page_num }}</a>
+            {% else %}
+                <a class="btn btn-outline-info mb-4" href="{{ url_for('profile', page=page_num) }}">{{ page_num }}</a>
+            {% endif %}
+        {% else %}
+            ...
+        {% endif %}
+    {% endfor %}
+    
+
 {% endblock content %}

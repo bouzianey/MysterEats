@@ -13,96 +13,66 @@
 
   </head>
   <body style="height: 100vh">
-  {% block navbar %}
     <!-- Fixed Bottom Navigation bar -->
-    <nav class="navbar fixed-bottom navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="#">MysterEats</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarText">
-        <ul class="navbar-nav mr-auto">
+    <header class="site-header">
+        <nav class="navbar fixed-bottom navbar-expand-lg navbar-dark bg-dark">
+          <a class="navbar-brand" href="#">MysterEats</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
 
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('adventure') }}">Adventure</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{{ url_for('about') }}">About</a>
-          </li>
-            {% if current_user.is_authenticated %}
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{ url_for('profile') }}">Account <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{ url_for('logout') }}">Logout <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{ url_for('settings') }}">Settings <span class="sr-only">(current)</span></a>
-                </li>
-                <li>
-                    <a href="{{ url_for('messages') }}">Messages
-                        {% set new_messages = current_user.new_messages() %}
-                        <span id="message_count" class="badge"
-                              style="visibility: {% if new_messages %}visible
-                              {% else %}hidden{% endif %};">
-                                {{ new_messages }}
-                            </span>
-                    </a>
-                </li>
-            {% else %}
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{ url_for('login') }}">Login <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{ url_for('signup') }}">Signup <span class="sr-only">(current)</span></a>
-                </li>
-            {% endif %}
-        </ul>
-        <span class="navbar-text">
-          A Black Spoons Application
-        </span>
-      </div>
-    </nav>
-  {% endblock %}
-    <!-- Do not add content between these 2 blocks -->
-    {% block content %}
-        <div class="container">
-        {% with messages = get_flashed_messages() %}
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('adventure') }}">Adventure</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('about') }}">About</a>
+              </li>
+                {% if current_user.is_authenticated %}
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ url_for('profile') }}">Account <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ url_for('logout') }}">Logout <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ url_for('settings') }}">Settings <span class="sr-only">(current)</span></a>
+                    </li>
+                {% else %}
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ url_for('login') }}">Login <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ url_for('signup') }}">Signup <span class="sr-only">(current)</span></a>
+                    </li>
+                {% endif %}
+            </ul>
+            <span class="navbar-text">
+              A Black Spoons Application
+            </span>
+          </div>
+        </nav>
+    </header>
+    <main role="main" class="container">
+      <div class="row">
+        <div class="col-md-8">
+          {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
-                {% for message in messages %}
-                    <div class="alert alert-info" role="alert">{{ message }}</div>
-                {% endfor %}
+              {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                  {{ message }}
+                </div>
+              {% endfor %}
             {% endif %}
-        {% endwith %}
+          {% endwith %}
+{#          {% block content %}{% endblock %}#}
         </div>
-        {# application content needs to be provided in the app_content block #}
-        {% block app_content %}{% endblock %}
-    {%  endblock %}
+      </div>
+    </main>
+    <!-- Do not add content between these 2 blocks -->
+    {% block content %}{%  endblock %}
     <!-- Optional JavaScript -->
-  {% block scripts %}
-  <script>
-      function set_message_count(n) {
-          $('#message_count').text(n);
-          $('#message_count').css('visibility', n ? 'visible' : 'hidden');
-      }
-      {% if current_user.is_authenticated %}
-          $(function() {
-              var since = 0;
-              setInterval(function() {
-                  $.ajax('{{ url_for('notifications') }}?since=' + since).done(
-                      function(notifications) {
-                          for (var i = 0; i < notifications.length; i++) {
-                              if (notifications[i].name == 'unread_message_count')
-                                  set_message_count(notifications[i].data);
-                              since = notifications[i].timestamp;
-                          }
-                      }
-                  );
-              }, 10000);
-          });
-      {% endif %}
-  </script>
-  {% endblock %}
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
