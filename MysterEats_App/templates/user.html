@@ -1,0 +1,8 @@
+
+{% if user != current_user %}
+    <p align="center">
+        <a href="{{ url_for('send_message', email_ad=user.email) }}">
+            Send private message
+        </a>
+    </p>
+{% endif %}

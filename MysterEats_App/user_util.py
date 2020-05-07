@@ -38,11 +38,7 @@ A Black Spoons Production Application.
 
 def get_summary(adventureID):
 
-
-
     dic = {'attendees': [], 'host': {}, 'adventure': {}, 'restaurants': [], 'comments': []}
-
-
 
     q = db.session.query(User, UserAdventure, Adventure).filter(User.id == UserAdventure.userID)\
         .filter(UserAdventure.adventureID == Adventure.adventureID)\
@@ -50,67 +46,35 @@ def get_summary(adventureID):
         .filter(AdventureRestaurant.restaurantID == Restaurant.restaurantID)\
         .filter(Adventure.adventureID == adventureID).all()
 
-
-
 # Adding Adventure id, name and date object
-
     dic['adventure']['id'] = q[0][2].adventureID
-
     dic['adventure']['name'] = q[0][2].name
-
     dic['adventure']['date'] = q[0][2].date
-
     dic['adventure']['host_id'] = q[0][2].host
 
-
-
 # Adding Attendees
-
     for i in q:
-
         dic['attendees'].append(
-
             {'id': i[0].id, 'first_name': i[0].first_name, 'last_name': i[0].last_name, 'email': i[0].email,
-
             'profile_pic': i[0].profile_pic})
 
-
-
     # Adding Host
-
     for i in dic['attendees']:
-
         if i['id'] == dic['adventure']['host_id']:
-
             dic['host']['user_id'] = i['id']
-
             dic['host']['first_name'] = i['first_name']
-
             dic['host']['last_name'] = i['last_name']
-
             dic['host']['email'] = i['email']
-
             dic['host']['profile_pic'] = i['profile_pic']
 
-
-
     # Adding Restaurants
-
     for i in q[0][2].adventure_restaurant:
-
         dic['restaurants'].append({'restaurantID': i.restaurant.restaurantID, 'desc': i.restaurant.description,
-
                                    'name': i.restaurant.restaurant_name, 'type': i.restaurant.type,
-
                                    'street': i.restaurant.street, 'city': i.restaurant.city,
-
                                    'state': i.restaurant.state, 'country': i.restaurant.country,
-
                                    'zipcode': i.restaurant.zipcode, 'phone': i.restaurant.phone,
-
                                    'url': i.restaurant.url})
-
-
 
     c = db.session.query(User, Adventure, Comment) \
      \
@@ -122,16 +86,10 @@ def get_summary(adventureID):
      \
     .order_by(Comment.date.desc()).all()
 
-
-
     # Adding Comments
-
     for i in c:
-
         dic['comments'].append({'user_id': i[0].id, 'first_name': i[0].first_name, 'last_name': i[0].last_name,
-
                                 'date': i[2].date, 'profile_pic': i[0].profile_pic, 'content': i[2].comment,
-
                                 'content_photo': i[2].photo})
     return dic
 

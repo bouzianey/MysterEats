@@ -1,4 +1,51 @@
 {% extends "layout.html "%}
 {% block content %}
-    <h1>Following Page</h1>
+    <head>
+        <style>
+            body {font-family: Arial, Helvetica, sans-serif;}
+            * {box-sizing: border-box;}
+
+            .host_buttons {
+                width: 100%;
+                display: none;
+                text-align: center;
+            }
+        </style>
+    </head>
+
+    <h1 align="center">Adventure Details</h1>
+
+    <p align="center">{{restaurant['geometry']['location']['lat']}}, {{restaurant['geometry']['location']['lng']}} </p>
+    <p align="center">Restaurant Name: {{restaurant['name']}}</p>
+    <p align="center">Restaurant Address: {{restaurant['formatted_address']}}</p>
+
+    <p align="center">Host: {{host}}</p>
+    <p align="center">
+    <div class="host_buttons" id="host_privilege">
+        <a class="btn btn-primary btn-lg" href="{{ url_for('adv_inputs', adv_id = adv_id) }}">Extend Adventure</a>
+    </div>
+    </p>
+
+    <p align="center">
+    <div class="host_buttons" id="both_privilege">
+        <a class="btn btn-primary btn-lg" href="{{ url_for('summary', adv_id = adv_id) }}">Summary</a>
+    </div>
+    </p>
+    <script>
+
+            document.addEventListener('DOMContentLoaded', function privilege() {
+
+                var x1 = document.getElementById("host_privilege");
+                var x2 = document.getElementById("both_privilege");
+
+                let y = "{{host}}";
+
+                if( y === "yes" )
+                {
+                    x1.style.display = "block";
+                }
+                x2.style.display = "block";
+
+            }, false);
+    </script>
 {% endblock content %}
