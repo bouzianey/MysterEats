@@ -207,7 +207,7 @@ def login():
         # adds new user to the database
         if form2.validate_on_submit():
             hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-            user = User(email=form2.email.data, password=hashed_password, first_name=form2.fname, last_name=form2.lname)
+            user = User(email=form2.email.data, password=hashed_password, first_name=form2.fname.data, last_name=form2.lname.data)
             db.session.add(user)
             db.session.commit()
             flash('Your account has been created! You can now create an adventure!', 'success')
