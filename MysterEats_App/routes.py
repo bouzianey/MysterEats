@@ -12,18 +12,17 @@ import json
 from MysterEats_App.forms import MessageForm
 from MysterEats_App.models import Message
 from MysterEats_App.config import *
+from sqlalchemy import desc
 
 @app.errorhandler(404)
 def page_not_found(e):
     # note that we set the 404 status explicitly
     return render_template('404.html'), 404
 
-
 @app.errorhandler(403)
 def forbidden_access(e):
     # note that we set the 404 status explicitly
     return render_template('403.html'), 403
-
 
 @app.route('/')
 @app.route('/adventure', methods=['GET', 'POST'])
@@ -35,6 +34,7 @@ def adventure():
 @app.route('/adventure/inputs/<int:adv_id>', methods=['GET', 'POST'])
 @login_required
 def adv_inputs(adv_id):
+
     form = DisplayForm()
 
     if form.validate_on_submit():
@@ -68,7 +68,7 @@ def adv_inputs(adv_id):
             adv_id = addAdventure(current_user.id, adventureName)
         else:
             adv_id = int(adv_id)
-            q = db.session.query(User).filter(UserAdventure.adventureID == adv_id).all()
+            q = db.session.query(User).filter(UserAdventure.adventureID == adv_id).filter(User.id != current_user.id).all()
             if q:
                 RECIPIENTS = []
                 for record in q:
@@ -84,7 +84,7 @@ def adv_inputs(adv_id):
         # Original
         if RECIPIENTS:
             send_email(ADMINS[0], RECIPIENTS, restaurant_details, adv_id)
-            #send_message(RECIPIENTS, restaurant_details, adv_id)
+            send_message(RECIPIENTS, restaurant_details, adv_id)
 
         return render_template('directions.html', adv_id=adv_id, host="yes", form=form, restaurant=restaurant_details,
                                route=route, address_dest=address_dest, current_address=current_address,
@@ -124,7 +124,7 @@ def directions(restaurant,adv_id):
     uber_obj = Uber(" "," "," ",restaurant_dict['geometry']['location']['lat'],restaurant_dict['geometry']['location']['lng'],restaurant_dict['formatted_address'])
     uber_link = uber_obj.get_uber_link()
 
-    #assign adventure ID
+    #Look for adventure ID in order to find out if the user already existed
     q = db.session.query(UserAdventure).filter(UserAdventure.adventureID == adv_id)\
         .filter(UserAdventure.userID == current_user.id).first()
     if q is None:
@@ -264,9 +264,6 @@ def profile():
         return redirect(url_for('profile'))
 
     return render_template('profile.html', query=q, image_file=image_file, form=form)
-
-
-
 
 
 @app.route('/profile/settings', methods=['GET', 'POST'])

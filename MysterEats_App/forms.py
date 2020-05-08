@@ -38,7 +38,7 @@ class DisplayForm(FlaskForm):
 
     preference = SelectField('Food Preferences',
                               choices=[('select', 'Select a choice...'), ('vegan+vegetarian', 'Vegetarian/Vegan'),
-                                       ('bar+restaurants', 'Bar'), ('group', 'Group Setting'),
+                                       ('bar+restaurants', 'Bar'), ('groups', 'Group Setting'),
                                        ('family', 'Family Friendly')], default='select')
     # TODO Implementation
     # price = SelectField('Select a price range',

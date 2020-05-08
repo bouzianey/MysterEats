@@ -8,6 +8,11 @@
     <table class="table table-hover">
     {% for post in messages %}
         <tr>
+            <td>
+                {{ post.get_sender_fname() }}
+            </td>
+        </tr>
+        <tr>
         <td>
             <p>Hello you're invited to join us for another adventure</p>
             <a href="{{ post }}">Click on the link to join us.</a>

@@ -3,8 +3,8 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 # Set environment variables
-os.environ['EMAIL_USERNAME'] = 'yacinebouziane2@gmail.com'#'testing.paulo@gmail.com'
-os.environ['EMAIL_PASSWORD'] = 'Southern2019$'#'oisffloohzgomkc'
+os.environ['EMAIL_USERNAME'] = ''#'testing.paulo@gmail.com'
+os.environ['EMAIL_PASSWORD'] = ''#'oisffloohzgomkc'
 
 # administrator list
 ADMINS = ['yacinebouziane2@gmail.com']

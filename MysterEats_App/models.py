@@ -137,10 +137,22 @@ class Message(db.Model):
     sender_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     recipient_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     body = db.Column(db.String(140))
+    sender_first_name = db.Column(db.String(20), nullable=False)
+    sender_last_name = db.Column(db.String(20), nullable=False)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 
     def __repr__(self):
         return '{}'.format(self.body)
+
+    def get_sender_fname(self):
+        return '{}'.format(self.sender_first_name)
+
+    def get_sender_lname(self):
+        return '{}'.format(self.sender_last_name)
+
+    def get_msg_timestamp(self):
+        return '{}'.format(self.timestamp)
+
 
 class Notification(db.Model):
     id = db.Column(db.Integer, primary_key=True)
