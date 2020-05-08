@@ -17,5 +17,5 @@ login_manager.login_message_category = 'info'
 from MysterEats_App import routes
 
 #set an environment variable for your API KEY
-os.environ['API_KEY'] = 'AIzaSyDeflvt0CPGbB52BY5p-3CSiofS9XeBCro'
+os.environ['key'] = 'AIzaSyDeflvt0CPGbB52BY5p-3CSiofS9XeBCro'
 

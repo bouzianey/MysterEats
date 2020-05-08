@@ -3,8 +3,8 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 # Set environment variables
-os.environ['EMAIL_USERNAME'] =  'yacinebouziane2@gmail.com'#'testing.paulo@gmail.com'
-os.environ['EMAIL_PASSWORD'] =  'Southern2019$'#'oisffloohzgomkc'
+os.environ['EMAIL_USERNAME'] = 'yacinebouziane2@gmail.com'#'testing.paulo@gmail.com'
+os.environ['EMAIL_PASSWORD'] = 'Southern2019$'#'oisffloohzgomkc'
 
 # administrator list
 ADMINS = ['yacinebouziane2@gmail.com']
@@ -18,4 +18,4 @@ mail_settings = {
     "MAIL_PASSWORD": os.environ['EMAIL_PASSWORD']
 }
 
-POSTS_PER_PAGE = 3
+POSTS_PER_PAGE = 6

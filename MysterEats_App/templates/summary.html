@@ -1,7 +1,11 @@
 {% extends "layout.html "%}
 {% block content %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/directions.css') }}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
 
-    <h1>Summary Page ({{ dic['adventure']['date'].strftime('%Y-%m-%d') }})</h1>
+    <div class="page-wrap">
+    <h1 align="center">Summary Page</h1>
+    <h3 align="center">({{ dic['adventure']['date'].strftime('%Y-%m-%d') }})</h3>
 
     <!-- TODO remove last attendee comma-->
 
@@ -150,5 +154,5 @@
         </div>
 
     {% endfor %}
-
+    </div>
 {% endblock content %}

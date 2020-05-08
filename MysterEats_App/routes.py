@@ -44,7 +44,9 @@ def adv_inputs(adv_id):
         radius = form.radius.data
         email_ad = form.email_address.data
         adventureName = form.adventureName.data
-        RECIPIENTS = [email_ad]
+
+        if email_ad:
+            RECIPIENTS = email_ad.split(";")
 
         restaurant_obj = SearchRestaurant(location, preference, radius)
         restaurant_details = restaurant_obj.get_best_restaurant()
@@ -68,26 +70,21 @@ def adv_inputs(adv_id):
             adv_id = int(adv_id)
             q = db.session.query(User).filter(UserAdventure.adventureID == adv_id).all()
             if q:
-                RECIPIENTS = [q[1].email]
-                email_ad = q[1].email
+                RECIPIENTS = []
+                for record in q:
+                    RECIPIENTS += [record.email]
+
+
 
         res_id = addRestaurant(restaurant_details)
         addAdventureRestaurant(adv_id, res_id)
         restaurant_details['formatted_address'] = restaurant_details['formatted_address'].replace(',', ' ')
         restaurant_details['name'] = restaurant_details['name'].replace('\'', ' ')
 
-        # TODO inv email optional
         # Original
         if RECIPIENTS:
             send_email(ADMINS[0], RECIPIENTS, restaurant_details, adv_id)
-            send_message(email_ad, restaurant_details, adv_id)
-
-        # # TODO Paul's multiple email fix
-        # if RECIPIENTS:
-        #     RECIPIENTS = email_ad.split(";")
-        #     send_email(ADMINS[0], RECIPIENTS, restaurant_details, adv_id)
-        #     send_message(email_ad, restaurant_details, adv_id)
-
+            #send_message(RECIPIENTS, restaurant_details, adv_id)
 
         return render_template('directions.html', adv_id=adv_id, host="yes", form=form, restaurant=restaurant_details,
                                route=route, address_dest=address_dest, current_address=current_address,
@@ -207,7 +204,7 @@ def login():
         # adds new user to the database
         if form2.validate_on_submit():
             hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-            user = User(email=form2.email.data, password=hashed_password, first_name=form2.fname, last_name=form2.lname)
+            user = User(email=form2.email.data, password=hashed_password, first_name=form2.fname.data, last_name=form2.lname.data)
             db.session.add(user)
             db.session.commit()
             flash('Your account has been created! You can now create an adventure!', 'success')

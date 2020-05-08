@@ -10,6 +10,7 @@ body, html {
     position:relative;
     margin:auto;
     overflow: auto;
+    max-height: 100px;
 }
 
 .icon-bar_logged_out {

@@ -7,10 +7,8 @@ from flask import render_template
 from MysterEats_App.config import *
 
 
-
 app.config.update(mail_settings)
 mail = Mail(app)
-
 
 
 @async_
