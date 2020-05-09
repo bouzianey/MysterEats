@@ -27,21 +27,33 @@
             </div>
 
             <div class ="adventure-gallery">
-                {% for user in query %}
+                {% for user in query.items %}
                     <div class="gallery">
                         <a href="{{ url_for('summary', adv_id=user[2].adventureID) }}">
-                            <img src="{{ url_for('static',filename='img/thisisatest.png') }}" alt="Sonic" width="375" height="400">
+                            <img src="{{ url_for('static',filename='img/restaurant.jpg') }}" alt="Sonic" width="375" height="400">
                         </a>
                         <div class="desc">
                             <p>
                                 <a class="" href="{{ url_for('summary', adv_id=user[2].adventureID) }}">{{ user[2].name}} </a><br>
-                                {{user[2].date}}
+                                {{user[2].date.strftime('%B %d, %Y')}}
                             </p>
                         </div>
                     </div>
                 {% endfor %}
 
             </div>
+            <!-- pagination and create links for pages -->
+            {% for page_num in query.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2)  %}
+                {%  if page_num %}
+                    {%  if query.page == page_num %}
+                        <a class="btn btn-info mb-4" href="{{ url_for('profile', page=page_num) }}">{{ page_num }}</a>
+                    {% else %}
+                        <a class="btn btn-outline-info mb-4" href="{{ url_for('profile', page=page_num) }}">{{ page_num }}</a>
+                    {% endif %}
+                {% else %}
+                    ...
+                {% endif %}
+            {% endfor %}
             </div>
         </div>
     </div>

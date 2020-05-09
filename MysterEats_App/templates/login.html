@@ -123,6 +123,36 @@
                     {% endif %}
                 </div>
 
+                <!-- first name -->
+                <div class="form-group">
+                    {{ form2.fname.label(class="form-control-label") }}
+                    {% if form2.fname.errors %}
+                        {{ form2.fname(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form2.fname.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form2.fname(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+
+                <!-- last name -->
+                <div class="form-group">
+                    {{ form2.lname.label(class="form-control-label") }}
+                    {% if form2.lname.errors %}
+                        {{ form2.lname(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form2.lname.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form2.lname(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+
 				<!-- Submit Button -->
 				<div class="group">
 					{{ form2.submit(class="button") }}

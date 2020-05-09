@@ -10,7 +10,7 @@
             <img class="logo" type = "image" src= "{{ url_for('static',filename='img/logo.png') }}">
         </div>
         <div class="button">
-            <a class="button" onclick="advButton()" href="{{ url_for('adv_inputs') }}">Adventure</a>
+            <a class="button" onclick="advButton()" href="{{ url_for('adv_inputs', adv_id=0) }}">Adventure</a>
         </div>
     </div>
     </div>

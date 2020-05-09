@@ -21,16 +21,57 @@
             <a href="{{ url_for('adventure') }}"><i class="fas fa-utensils"></i></a>
             <a href="{{ url_for('profile') }}"><i class="fas fa-user"></i></a>
             <a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i></a>
+            <a href="{{ url_for('messages') }}">Messages
+                        {% set new_messages = current_user.new_messages() %}
+                        <span id="message_count" class="badge"
+                              style="visibility: {% if new_messages %}visible
+                              {% else %}hidden{% endif %};">
+                                {{ new_messages }}
+                        </span>
+                    </a>
         {% else %}
             <div class="icon-bar_logged_out fixed-bottom">
                 <a href="{{ url_for('login') }}"><i class="fas fa-sign-in-alt"></i></a>
             </div>
         {% endif %}
     </div>
-
     <!-- Do not add content between these 2 blocks -->
-    {% block content %}{%  endblock %}
+    <div class="container">
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-info" role="alert">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    </div>
+        {# application content needs to be provided in the app_content block #}
+        {% block content %}{% endblock %}
     <!-- Optional JavaScript -->
+  {% block scripts %}
+  <script>
+      function set_message_count(n) {
+          $('#message_count').text(n);
+          $('#message_count').css('visibility', n ? 'visible' : 'hidden');
+      }
+      {% if current_user.is_authenticated %}
+          $(function() {
+              var since = 0;
+              setInterval(function() {
+                  $.ajax('{{ url_for('notifications') }}?since=' + since).done(
+                      function(notifications) {
+                          for (var i = 0; i < notifications.length; i++) {
+                              if (notifications[i].name == 'unread_message_count')
+                                  set_message_count(notifications[i].data);
+                              since = notifications[i].timestamp;
+                          }
+                      }
+                  );
+              }, 10000);
+          });
+      {% endif %}
+  </script>
+  {% endblock %}
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
