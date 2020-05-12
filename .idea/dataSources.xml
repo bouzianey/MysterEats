@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="site" uuid="06172e89-342b-4a69-ad54-048d2e6086b7">
+    <data-source source="LOCAL" name="site" uuid="5af16be1-f7a0-4b93-9ac0-929685081de4">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:C:\Users\paulo\PycharmProjects\BlackSpoons_prod\MysterEats_App\site.db</jdbc-url>
+      <jdbc-url>jdbc:sqlite:C:\Users\User\PycharmProjects\testing\BlackSpoons_prod\MysterEats_App\site.db</jdbc-url>
     </data-source>
   </component>
 </project>

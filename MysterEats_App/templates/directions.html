@@ -4,99 +4,83 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
 
     <div class="page-wrap">
-    <!-- grabs user's current location on page load-->
-    <h1 id="header" align="center">Let's start the adventure</h1>
-
-    <!-- button for Uber -->
-    <p align="center">
-        <button class="uber_button" href="{{uber_link}}"><i class="fab fa-uber"></i> Get an Uber Ride</button>
-        <button class="btn btn-primary btn-lg" onclick="openForm_Instructions()">Show Html instructions</button>
-    </p>
-    <p align="center">
-        <div class="host_buttons" id="host_privelege">
-            <a class="btn btn-primary btn-lg" href="{{ url_for('adv_inputs', adv_id = adv_id) }}">Extend Adventure</a>
-            <a class="btn btn-primary btn-lg" href="{{ url_for('summary', adv_id = adv_id) }}">End Adventure</a>
+        <!-- grabs user's current location on page load-->
+        <h1 align="center">Let's start the adventure</h1>
+        <!-- button for Uber -->
+        <p align="center">
+            <a  class="btn btn-primary btn-lg" href="{{uber_link}}" target="_blank">Get an Uber Ride</a>
+            <button class="btn btn-primary btn-lg" onclick="openForm_Instructions()">Show Html instructions</button>
+        </p>
+        <p align="center">
+        <div class="host_buttons" id="both_users_privilege">
+            <a class="btn btn-primary btn-lg" href="{{ url_for('following', host = host, restaurant = restaurant, adv_id = adv_id) }}">Continue To Adventure</a>
         </div>
-    </p>
-    <p align="center">
-    <div class="host_buttons" id="attende_privelege">
-        <a class="btn btn-primary btn-lg" href="{{ url_for('summary' , adv_id = adv_id) }}">Continue</a>
-    </div>
-    </p>
-    <p align="center">
-        <iframe id="directions" align="center" width="375" height="375" frameborder="0">
-        </iframe>
-    </p>
+        </p>
+        </p>
+        <p align="center">
+            <iframe id="directions" align="center" width="375" height="375" frameborder="0">
+            </iframe>
+        </p>
 
-    <div class="form-popup" id="instructionForm">
-        <form action="" class="form-container">
-            <p align="center">{{restaurant['geometry']['location']['lat']}}, {{restaurant['geometry']['location']['lng']}} </p>
-            <p align="center">Restaurant Name: {{restaurant['name']}}</p>
-            <p align="center">Distance : {{ route.get_distance() }}</p>
-            <p align="center">Duration : {{ route.get_duration() }}</p>
-            {% for each_step in route.get_steps() %}
-                <p align="center">{{ each_step['html_instructions'] }}</p>
-            {% endfor %}
-            <button type="button" class="btn cancel" onclick="closeForm_Instructions()">Close</button>
-        </form>
-    </div>
+        <div class="form-popup" id="instructionForm">
+            <form action="" class="form-container">
+                <p align="center">{{restaurant['geometry']['location']['lat']}}, {{restaurant['geometry']['location']['lng']}} </p>
+                <p align="center">Restaurant Name: {{restaurant['name']}}</p>
+                <p align="center">Distance : {{ route.get_distance() }}</p>
+                <p align="center">Duration : {{ route.get_duration() }}</p>
+                {% for each_step in route.get_steps() %}
+                    <p align="center">{{ each_step['html_instructions'] }}</p>
+                {% endfor %}
+                <button type="button" class="btn cancel" onclick="closeForm_Instructions()">Close</button>
+            </form>
+        </div>
 
-    <!-- Displays Graphical  -->
-    <script>
+        <!-- Displays Graphical  -->
+        <script>
 
-        document.addEventListener('DOMContentLoaded', function getLocation() {
+            document.addEventListener('DOMContentLoaded', function getLocation() {
 
-            var x = document.getElementById("demo");
-            var x1 = document.getElementById("host_privelege");
-            var x2 = document.getElementById("attende_privelege");
+                var x = document.getElementById("demo");
+                var x1 = document.getElementById("both_users_privilege");
 
-            let y = "{{host}}";
-
-            if( y === "yes" )
-            {
                 x1.style.display = "block";
+
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(mapDirections);
+                    //navigator.geolocation.getCurrentPosition(showPosition);
+                }
+                else {
+                    x.innerHTML = "Geolocation is not supported by this browser.";
+                }
+
+                function mapDirections(position) {
+
+                    let start_location = "{{current_address}}";
+
+                    let destination = "{{address_dest}}";
+
+                    document.getElementById("directions").src = "https://www.google.com/maps/embed/v1/directions?key=AIzaSyC-_LI36XAW8G7i3Esc6nVE9CDWjIqV1XU\n" +
+
+                        "&origin=" + start_location + "\n" +
+
+                        "&destination=" + destination + "\n" +
+
+                        "&avoid=tolls"
+
+                    allowfullscreen;
+
+                };
+
+            }, false);
+
+            function openForm_Instructions() {
+                document.getElementById("instructionForm").style.display = "block";
             }
-            else
-            {
-                x2.style.display = "block";
+
+            function closeForm_Instructions() {
+                document.getElementById("instructionForm").style.display = "none";
             }
 
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(mapDirections);
-                //navigator.geolocation.getCurrentPosition(showPosition);
-            }
-            else {
-                x.innerHTML = "Geolocation is not supported by this browser.";
-            }
-
-            function mapDirections(position) {
-
-                let start_location = "{{current_address}}";
-
-                let destination = "{{address_dest}}";
-
-                document.getElementById("directions").src = "https://www.google.com/maps/embed/v1/directions?key=AIzaSyC-_LI36XAW8G7i3Esc6nVE9CDWjIqV1XU\n" +
-
-                    "&origin=" + start_location + "\n" +
-
-                    "&destination=" + destination + "\n" +
-
-                    "&avoid=tolls"
-
-                allowfullscreen;
-
-            };
-
-        }, false);
-
-        function openForm_Instructions() {
-            document.getElementById("instructionForm").style.display = "block";
-        }
-
-        function closeForm_Instructions() {
-            document.getElementById("instructionForm").style.display = "none";
-        }
-
-    </script>
+        </script>
     </div>
 {% endblock content %}
