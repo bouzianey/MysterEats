@@ -4,12 +4,13 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
 
     <div class="page-wrap">
-    <h1>Messages</h1>
+    <h1>Inbox</h1>
     <table class="table table-hover">
     {% for post in messages %}
         <tr>
             <td>
-                {{ post.get_sender_fname() }}
+                {{ post.get_sender_fname() }} {{ post.get_sender_lname() }} <br>
+                {{ post.get_msg_timestamp() }}
             </td>
         </tr>
         <tr>

@@ -2,6 +2,9 @@
 
 {% block content %}
 
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/settings.css') }}">
+
+    <div class="page-wrap">
     <div class="content-section">
 
         <div class="media">
@@ -140,6 +143,7 @@
 
         </form>
 
+    </div>
     </div>
 
 {% endblock content %}
