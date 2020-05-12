@@ -34,7 +34,7 @@
                         </a>
                         <div class="desc">
                             <p>
-                                <a class="" href="{{ url_for('summary', adv_id=user[2].adventureID) }}">{{ user[2].name}} </a><br>
+                                <a class="" href="{{ url_for('summary', adv_id=user[2].adventureID, active=user[2].active) }}">{{ user[2].name}} </a><br>
                                 {{user[2].date.strftime('%B %d, %Y')}}
                             </p>
                         </div>

@@ -31,11 +31,11 @@
 <body>
 <div class="page-wrap">
 
-    <div class="content-section" align="center">
+    <div class="content-section white" align="center">
         <form method="POST" action="">
             {{ form.hidden_tag() }}
             <fieldset class="form-group">
-                <legend align="center" class="border-bottom mb-4">Start an Adventure.</legend>
+                <legend align="center" class="border-bottom mb-4">Adventure Inputs</legend>
                 <div class="form-group" id="adv_name_input">
                     {{ form.adventureName.label(class="form-control-label") }}
                     {% if form.adventureName.errors %}

@@ -118,6 +118,31 @@
 
                 <ul id="comments-list" class="comments-list">
                     <li>
+{#                        <div class="comment-main-level">#}
+{#                            <!-- Avatar -->#}
+{#                            <div class="comment-avatar">#}
+{#                                <img src="{{ url_for('static', filename='profile_pics/' + i['profile_pic']) }}">#}
+{#                            </div>#}
+{#                            <!-- Comment Contents -->#}
+{#                            <div class="comment-box">#}
+{#                                <div class="comment-head">#}
+{#                                    {% if dic['host']['user_id'] == %}#}
+{#                                    {% endif %} #}
+{#                                    <h6 class="comment-name by-author">{{dic['host']['first_name']}} {{ dic['host']['last_name'] }}</h6>#}
+{#                                    <span>{{ i['date'].strftime('%I:%M %p - %m/%d/%Y') }}</span>#}
+{#                                    <i class="fa fa-reply"></i>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="comment-content">#}
+{#                            {{ i['content']}}#}
+{##}
+{#                            {% if i['content_photo'] %}#}
+{#                                <img src="{{ url_for('static', filename='comment_pics/' + i['content_photo']) }}" class="img-fluid">#}
+{#                            {% endif %}#}
+{#                            <br>#}
+{#                        </div>#}
+
                         <div class="comment-main-level">
                             <!-- Avatar -->
                             <div class="comment-avatar">
@@ -126,30 +151,11 @@
                             <!-- Comment Contents -->
                             <div class="comment-box">
                                 <div class="comment-head">
-                                    <h6 class="comment-name by-author">{{dic['host']['first_name']}} {{ dic['host']['last_name'] }}</h6>
-                                    <span>{{ i['date'].strftime('%I:%M %p - %m/%d/%Y') }}</span>
-                                    <i class="fa fa-reply"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="comment-content">
-                            {{ i['content']}}
-
-                            {% if i['content_photo'] %}
-                                <img src="{{ url_for('static', filename='comment_pics/' + i['content_photo']) }}" class="img-fluid">
-                            {% endif %}
-                            <br>
-                        </div>
-
-                        <div class="comment-main-level">
-                            <!-- Avatar -->
-                            <div class="comment-avatar">
-                                <img src="{{ url_for('static', filename='profile_pics/' + i['profile_pic']) }}">
-                            </div>
-                            <!-- Comment Contents -->
-                            <div class="comment-box">
-                                <div class="comment-head">
-                                    <h6 class="comment-name"> {{i['first_name']}} {{ i['last_name']}} </h6>
+                                    {% if i['user_id'] == dic['host']['user_id'] %}
+                                        <h6 class="comment-name by-author"> {{i['first_name']}} {{ i['last_name']}} </h6>
+                                    {% else %}
+                                        <h6 class="comment-name"> {{i['first_name']}} {{ i['last_name']}} </h6>
+                                    {% endif %}
                                     <span>{{ i['date'].strftime('%I:%M %p - %m/%d/%Y') }}</span>
                                     <i class="fa fa-reply"></i>
                                 </div>

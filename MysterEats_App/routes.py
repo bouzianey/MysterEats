@@ -14,6 +14,12 @@ from MysterEats_App.models import Message
 from MysterEats_App.config import *
 from sqlalchemy import desc
 
+@app.errorhandler(405)
+def page_not_found(e):
+    # note that we set the 405 status explicitly
+    return render_template('405.html'), 405
+
+
 @app.errorhandler(404)
 def page_not_found(e):
     # note that we set the 404 status explicitly
@@ -21,7 +27,7 @@ def page_not_found(e):
 
 @app.errorhandler(403)
 def forbidden_access(e):
-    # note that we set the 404 status explicitly
+    # note that we set the 403 status explicitly
     return render_template('403.html'), 403
 
 @app.route('/')
@@ -44,6 +50,7 @@ def adv_inputs(adv_id):
         radius = form.radius.data
         email_ad = form.email_address.data
         adventureName = form.adventureName.data
+        RECIPIENTS = email_ad
 
         if email_ad:
             RECIPIENTS = email_ad.split(";")
@@ -108,39 +115,49 @@ def following( host,restaurant, adv_id):
 @login_required
 def directions(restaurant,adv_id):
 
-    #convert restaurant details from a string to a dict
-    restaurant_format = restaurant.replace('\'','\"')
-    restaurant_dict = json.loads(restaurant_format)
+    if Adventure.query.get(adv_id).active:
+        #convert restaurant details from a string to a dict
+        restaurant_format = restaurant.replace('\'','\"')
+        restaurant_dict = json.loads(restaurant_format)
 
-    destination = str(restaurant_dict['geometry']['location']['lat']) +','+ str(restaurant_dict['geometry']['location']['lng'])
+        destination = str(restaurant_dict['geometry']['location']['lat']) +','+ str(restaurant_dict['geometry']['location']['lng'])
 
 
-    direction_obj = Directions(" ",destination)
-    route = direction_obj.get_directions()
+        direction_obj = Directions(" ",destination)
+        route = direction_obj.get_directions()
 
-    address_dest = str(restaurant_dict['formatted_address']).replace(' ','+')
-    current_address = str(direction_obj.get_origin()).replace(' ','+')
+        address_dest = str(restaurant_dict['formatted_address']).replace(' ','+')
+        current_address = str(direction_obj.get_origin()).replace(' ','+')
 
-    uber_obj = Uber(" "," "," ",restaurant_dict['geometry']['location']['lat'],restaurant_dict['geometry']['location']['lng'],restaurant_dict['formatted_address'])
-    uber_link = uber_obj.get_uber_link()
+        uber_obj = Uber(" "," "," ",restaurant_dict['geometry']['location']['lat'],restaurant_dict['geometry']['location']['lng'],restaurant_dict['formatted_address'])
+        uber_link = uber_obj.get_uber_link()
 
-    #Look for adventure ID in order to find out if the user already existed
-    q = db.session.query(UserAdventure).filter(UserAdventure.adventureID == adv_id)\
-        .filter(UserAdventure.userID == current_user.id).first()
-    if q is None:
-        ua = UserAdventure(userID=current_user.id, adventureID=adv_id)
-        db.session.add(ua)
-        db.session.commit()
+        #Look for adventure ID in order to find out if the user already existed
+        q = db.session.query(UserAdventure).filter(UserAdventure.adventureID == adv_id)\
+            .filter(UserAdventure.userID == current_user.id).first()
+        if q is None:
+            ua = UserAdventure(userID=current_user.id, adventureID=adv_id)
+            db.session.add(ua)
+            db.session.commit()
 
-    return render_template('directions.html', adv_id = adv_id, host = "no", restaurant = restaurant_dict, route = route, address_dest = address_dest, current_address = current_address ,uber_link =uber_link)
+        return render_template('directions.html', adv_id=adv_id, host="no", restaurant=restaurant_dict, route=route,
+                               address_dest=address_dest, current_address=current_address, uber_link=uber_link)
+    else:
+        abort(405)
 
 
 @app.route('/adventure/summary/<int:adv_id>', methods=['GET', 'POST'])
+@app.route('/adventure/summary/<int:adv_id>/<int:active>', methods=['GET', 'POST'])
 @login_required
-def summary(adv_id):
+def summary(adv_id, active):
 
     correct_user = False
     form = CommentPost()
+
+    if active != 1:
+        Adventure.query.get(adv_id).active = False
+        db.session.commit()
+
 
     # 404 error if adventure doesn't exist
     if Adventure.query.get(adv_id) is None:
@@ -171,7 +188,7 @@ def summary(adv_id):
         db.session.add(comment)
         db.session.commit()
 
-        return redirect(url_for('summary', adv_id=adv_id))
+        return redirect(url_for('summary', adv_id=adv_id,active=active))
 
     return render_template('summary.html', dic=dic, form=form)
 

@@ -159,3 +159,27 @@ button.site:after{
   text-shadow: 1px 1px 1px #fff;
   margin-bottom: 30px;
 }
+
+.btn-outline-info {
+	/*background-color: #e24d36;*/
+    color: black;
+    background-color: white;
+	border-color: black;
+}
+
+.btn-outline-info:hover {
+	color: #fff;
+	background-color: #e24d36;
+	border-color: #e24d36;
+}
+
+.btn-primary:hover {
+	color: #fff;
+	background-color: #e24d36;
+	border-color: black;
+}
+
+.btn-primary {
+  background-color: black;
+  border-color: black;
+}

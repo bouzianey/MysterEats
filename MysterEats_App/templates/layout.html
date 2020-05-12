@@ -9,14 +9,13 @@
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
-
-    <title>MysterEats</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/fix.css') }}">
+      <title>MysterEats</title>
 
   </head>
   <body style="height: 100vh">
     <!-- Fixed Bottom Navigation bar -->
-    <div class="icon-bar fixed-bottom">
+    <div id="colorchange" class="icon-bar fixed-bottom">
         {% if current_user.is_authenticated %}
             <a href="{{ url_for('adventure') }}"><i class="fas fa-utensils"></i></a>
             <a href="{{ url_for('profile') }}"><i class="fas fa-user"></i></a>
