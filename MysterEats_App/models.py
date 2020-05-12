@@ -67,6 +67,7 @@ class Adventure(db.Model):
     name = db.Column(db.String(20), nullable=False)
     date = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     host = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    active = db.Column(db.Boolean, nullable=False, default=True)
     comments = db.relationship('Comment', backref='adventure')
     adventure_restaurant = db.relationship('AdventureRestaurant', backref='adventure_restaurants')
 

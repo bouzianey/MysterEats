@@ -5,7 +5,7 @@
   max-width:375px;
   min-height:812px;
   position:relative;
-  background-color: darkred;
+  background-color: #e24d36;
   box-shadow:0 12px 15px 0 rgba(0,0,0,.24),0 17px 50px 0 rgba(0,0,0,.19);
 }
 
@@ -16,7 +16,8 @@
     transform: translateX(-50%) translateY(-10%);
 }
 .button {
-  background: limegreen;
+  background: #000000;
+  color: black;
   width: 180px;
   padding: 4px 0;
   position: absolute;

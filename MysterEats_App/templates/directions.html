@@ -5,18 +5,14 @@
 
     <div class="page-wrap">
         <!-- grabs user's current location on page load-->
-        <h1 align="center">Let's start the adventure</h1>
-        <!-- button for Uber -->
-        <p align="center">
-            <a  class="btn btn-primary btn-lg" href="{{uber_link}}" target="_blank">Get an Uber Ride</a>
-            <button class="btn btn-primary btn-lg" onclick="openForm_Instructions()">Show Html instructions</button>
-        </p>
-        <p align="center">
-        <div class="host_buttons" id="both_users_privilege">
-            <a class="btn btn-primary btn-lg" href="{{ url_for('following', host = host, restaurant = restaurant, adv_id = adv_id) }}">Continue To Adventure</a>
+        <h1 align="center">Instructions</h1>
+        <hr>
+        <div align="center">
+            <!-- button for Uber -->
+                <a  class="btn btn-primary btn-lg" href="{{uber_link}}" target="_blank">UBER</a>
+                <button class="btn btn-primary btn-lg" onclick="openForm_Instructions()">DIRECTIONS</button>
+            </p>
         </div>
-        </p>
-        </p>
         <p align="center">
             <iframe id="directions" align="center" width="375" height="375" frameborder="0">
             </iframe>
@@ -34,6 +30,12 @@
                 <button type="button" class="btn cancel" onclick="closeForm_Instructions()">Close</button>
             </form>
         </div>
+        <hr>
+        <p align="center">
+            <div class="host_buttons" id="both_users_privilege">
+             <a class="btn btn-primary btn-lg" href="{{ url_for('following', host = host, restaurant = restaurant, adv_id = adv_id) }}">CONTINUE</a>
+            </div>
+        </p>
 
         <!-- Displays Graphical  -->
         <script>
