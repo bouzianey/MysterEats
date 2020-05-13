@@ -8,17 +8,16 @@
 	box-shadow:0 12px 15px 0 rgba(0,0,0,.24),0 17px 50px 0 rgba(0,0,0,.19);
 }
 
-#dimmer
-{
-    background:#000;
-    opacity:0.5;
-    position:fixed; /* important to use fixed, not absolute */
-    top:0;
-    left:0;
-    width:375px;
-    height:100%;
-    display:none;
-    z-index:999;
+#dimmer {
+	background: #000;
+	opacity: 0.5;
+	position: fixed;
+	top: 0;
+	width: 375px;
+	height: 100vh;
+	display: none;
+	z-index: 9999;
+	margin: 0 auto;
 }
 
 .loader {
@@ -26,7 +25,7 @@
     top: 50%;
     left: 50%;
     margin-top: -50px;
-    margin-left: -100px;
+    margin-left: -60px;
     border: 16px solid #f3f3f3;
     border-top: 16px solid #3498db;
     border-radius: 50%;
