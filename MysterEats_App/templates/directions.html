@@ -20,8 +20,6 @@
 
         <div class="form-popup" id="instructionForm">
             <form action="" class="form-container">
-                <p align="center">{{restaurant['geometry']['location']['lat']}}, {{restaurant['geometry']['location']['lng']}} </p>
-                <p align="center">Restaurant Name: {{restaurant['name']}}</p>
                 <p align="center">Distance : {{ route.get_distance() }}</p>
                 <p align="center">Duration : {{ route.get_duration() }}</p>
                 {% for each_step in route.get_steps() %}

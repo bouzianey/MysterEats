@@ -21,10 +21,10 @@ def page_not_found(e):
     return render_template('405.html'), 405
 
 
-# @app.errorhandler(404)
-# def page_not_found(e):
-#     # note that we set the 404 status explicitly
-#     return render_template('404.html'), 404
+@app.errorhandler(404)
+def page_not_found(e):
+    # note that we set the 404 status explicitly
+    return render_template('404.html'), 404
 
 @app.errorhandler(403)
 def forbidden_access(e):
@@ -51,10 +51,11 @@ def adv_inputs(adv_id):
         radius = form.radius.data
         email_ad = form.email_address.data
         adventureName = form.adventureName.data
-        RECIPIENTS = email_ad
 
         if email_ad:
             RECIPIENTS = email_ad.split(";")
+        else:
+            RECIPIENTS = email_ad
 
         restaurant_obj = SearchRestaurant(location, preference, radius)
         restaurant_details = restaurant_obj.get_best_restaurant()
@@ -229,8 +230,6 @@ def login():
             login_user(user, remember=form.remember.data)
             next_page = request.args.get('next')
             return redirect(next_page) if next_page else redirect(url_for('adventure'))
-        else:
-            flash('Login Failed. Check password is correct', 'danger')
 
         # adds new user to the database
         if form2.validate_on_submit():
