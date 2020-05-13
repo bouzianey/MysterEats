@@ -19,21 +19,21 @@
     <div class="page-wrap">
     <h1 align="center">Adventure Details</h1>
         <hr>
-
+        
 {#    <p align="center">{{restaurant['geometry']['location']['lat']}}, {{restaurant['geometry']['location']['lng']}} </p>#}
     <p align="center" class="r_name">{{restaurant['name']}}</p>
     <p align="center" class="r_add">{{restaurant['formatted_address']}}</p>
 
 {#    <p align="center">Host: {{host}}</p>#}
     <div class="follow-buttons">
-        <p align="center">
+        <p align="follow-items">
             <div class="host_buttons" id="host_privilege">
                 <a class="btn btn-primary btn-lg" href="{{ url_for('adv_inputs', adv_id = adv_id) }}">Extend Adventure</a>
                 <a class="btn btn-primary btn-lg" href="{{ url_for('summary', adv_id = adv_id, active=0) }}">Summary</a>
             </div>
         </p>
 
-        <p align="center">
+        <p align="follow items">
         <div class="host_buttons" id="both_privilege">
             <a class="btn btn-primary btn-lg" href="{{ url_for('summary', adv_id = adv_id, active=1) }}">Summary</a>
         </div>

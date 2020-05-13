@@ -1,12 +1,16 @@
 /* Adventure Page */
+body {
+  padding: 0px;
+}
 .page-wrap{
-  width:100%;
-  margin:auto;
-  max-width:375px;
-  min-height:812px;
-  position:relative;
+  /*width:100%;*/
+  /*margin:auto;*/
+  /*max-width:375px;*/
+  min-height:100vh;
+  /*position:relative;*/
   background-color: #e24d36;
   box-shadow:0 12px 15px 0 rgba(0,0,0,.24),0 17px 50px 0 rgba(0,0,0,.19);
+  padding-bottom: 0px;
 }
 
 .logo {

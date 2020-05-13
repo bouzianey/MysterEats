@@ -6,54 +6,44 @@
     <div class="page-wrap">
         <!-- TODO remove last attendee comma-->
         <img class="logo" type = "image" height="200" width="375" src= "{{ url_for('static',filename='img/offroad.png') }}">
-        <h1>{{dic['adventure']['name']}}</h1>
-        <p class="host_info">Host: {{dic['host']['first_name']}} {{ dic['host']['last_name'] }} on {{ dic['adventure']['date'].strftime('%Y-%m-%d') }}</p>
-
-            <h5>
-
+        <div class="summary-header">
+            <div class="summary-title">{{dic['adventure']['name']}}</div>
+            <div class="summary-host host_info">Hosted by {{dic['host']['first_name']}} {{ dic['host']['last_name'] }}</div>
+            <div class="summary-date">{{ dic['adventure']['date'].strftime('%Y-%m-%d') }}</div>
+            <div class="summary-attendees">
                 {% set alist = [] %}
-
                 {% for i in dic['attendees']%}
-
                     <!-- Prevents the append from printing None-->
-
                     {{ alist.append(i['first_name'] + ' ' + i['last_name']) if alist.append(i['first_name'] + ' ' + i['last_name'])}}
-
                 {% endfor %}
-
                 <!-- Prints the attendees by separating them by commas-->
-
                 Attendees: {{ ', '.join(alist) }}
-
-            </h5>
-
-
-
-        </h3>
-
-        <br>
-
-        <h4>Restaurants</h4>
-
-        {% for i in dic['restaurants']%}
-
-            <p>{{i['name']}}</p>
-
-            <p>{{i['street']}}, {{i['city']}}, {{i['state']}} {{i['zipcode']}}, {{i['country']}} </p>
-
-            <br>
-
-        {% endfor %}
+            </div>
+        </div>
+        <div class="restaurant-container">
+            <div class="restaurant-header">Restaurants</div>
+            <div class="restaurant-item-container">
+                {% for i in dic['restaurants']%}
+                    <div class="restaurant-items">
+                        <div>
+                            <img src={{i['photo']}} alt="">
+                        </div>
+                        <div class="restaurant-name">{{i['name']}}</div>
+                        <div class="restaurant-location">{{i['street']}}, {{i['city']}}, {{i['state']}} {{i['zipcode']}}, {{i['country']}} </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
 
 
-
-        <form method="POST" action="" enctype="multipart/form-data">
+        <div class="post-container">
+            <form method="POST" action="" enctype="multipart/form-data">
 
             {{ form.hidden_tag() }}
 
             <fieldset class="form-group">
 
-                <legend class="border-bottom mb-4">Create a new post.</legend>
+                <legend class="border-bottom mb-4 post-title">Create a new post.</legend>
 
                 <div class="form-group">
 
@@ -107,10 +97,25 @@
 
         </form>
 
+        </div>
 
-
-        <h4>Comments</h4>
-
+        <div class="comment-pag">
+            <div>
+                {% for page_num in dic['pages'] %}
+                    {%  if page_num %}
+                        {%  if dic['curr_page'] == page_num %}
+                            <a class="btn btn-info mb-4" href="{{ url_for('summary', adv_id=dic['adventure']['id'], page=page_num) }}">{{ page_num }}</a>
+                        {% else %}
+                            <a class="btn btn-outline-info mb-4" href="{{ url_for('summary', adv_id=dic['adventure']['id'], page=page_num) }}">{{ page_num }}</a>
+                        {% endif %}
+                    {% else %}
+                        ...
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <div class="comment-container">
+        <div class="comment-header">Comments</div>
         {% for i in dic['comments'] %}
 
             <div class="comments-container">
@@ -118,51 +123,33 @@
 
                 <ul id="comments-list" class="comments-list">
                     <li>
-{#                        <div class="comment-main-level">#}
-{#                            <!-- Avatar -->#}
-{#                            <div class="comment-avatar">#}
-{#                                <img src="{{ url_for('static', filename='profile_pics/' + i['profile_pic']) }}">#}
-{#                            </div>#}
-{#                            <!-- Comment Contents -->#}
-{#                            <div class="comment-box">#}
-{#                                <div class="comment-head">#}
-{#                                    {% if dic['host']['user_id'] == %}#}
-{#                                    {% endif %} #}
-{#                                    <h6 class="comment-name by-author">{{dic['host']['first_name']}} {{ dic['host']['last_name'] }}</h6>#}
-{#                                    <span>{{ i['date'].strftime('%I:%M %p - %m/%d/%Y') }}</span>#}
-{#                                    <i class="fa fa-reply"></i>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                        <div class="comment-content">#}
-{#                            {{ i['content']}}#}
-{##}
-{#                            {% if i['content_photo'] %}#}
-{#                                <img src="{{ url_for('static', filename='comment_pics/' + i['content_photo']) }}" class="img-fluid">#}
-{#                            {% endif %}#}
-{#                            <br>#}
-{#                        </div>#}
-
                         <div class="comment-main-level">
-                            <!-- Avatar -->
-                            <div class="comment-avatar">
-                                <img src="{{ url_for('static', filename='profile_pics/' + i['profile_pic']) }}">
-                            </div>
                             <!-- Comment Contents -->
                             <div class="comment-box">
                                 <div class="comment-head">
-                                    {% if i['user_id'] == dic['host']['user_id'] %}
-                                        <h6 class="comment-name by-author"> {{i['first_name']}} {{ i['last_name']}} </h6>
-                                    {% else %}
-                                        <h6 class="comment-name"> {{i['first_name']}} {{ i['last_name']}} </h6>
-                                    {% endif %}
+                                    <div class="comment-header">
+                                    <!-- Avatar -->
+                                    <div class="comment-header-title">
+                                        <div class="comment-avatar">
+                                            <img src="{{ url_for('static', filename='profile_pics/' + i['profile_pic']) }}">
+                                        </div>
+                                            {% if i['user_id'] == dic['host']['user_id'] %}
+                                                <h6 class="comment-name by-author"> {{i['first_name']}} {{ i['last_name']}} </h6>
+                                            {% else %}
+                                                <h6 class="comment-name"> {{i['first_name']}} {{ i['last_name']}} </h6>
+                                            {% endif %}
+                                        </div>
+                                    </div>
                                     <span>{{ i['date'].strftime('%I:%M %p - %m/%d/%Y') }}</span>
-                                    <i class="fa fa-reply"></i>
+                                    <div class="comment" >
+                                        {{ i['content']}}
+                                    </div>
+                                    <i class="fa fa-reply" style="text-align: end;"></i>
                                 </div>
                             </div>
                         </div>
                         <div class="comment-content">
-                            {{ i['content']}}
+
 
                             {% if i['content_photo'] %}
                                 <img src="{{ url_for('static', filename='comment_pics/' + i['content_photo']) }}" class="img-fluid">
@@ -173,16 +160,6 @@
                 </ul>
             </div>
         {% endfor %}
-        {% for page_num in dic['pages'] %}
-            {%  if page_num %}
-                {%  if dic['curr_page'] == page_num %}
-                    <a class="btn btn-info mb-4" href="{{ url_for('summary', adv_id=dic['adventure']['id'], page=page_num) }}">{{ page_num }}</a>
-                {% else %}
-                    <a class="btn btn-outline-info mb-4" href="{{ url_for('summary', adv_id=dic['adventure']['id'], page=page_num) }}">{{ page_num }}</a>
-                {% endif %}
-            {% else %}
-                ...
-            {% endif %}
-        {% endfor %}
+        </div>
     </div>
 {% endblock content %}

@@ -76,7 +76,7 @@ def get_summary(adventureID, page):
                                    'street': i.restaurant.street, 'city': i.restaurant.city,
                                    'state': i.restaurant.state, 'country': i.restaurant.country,
                                    'zipcode': i.restaurant.zipcode, 'phone': i.restaurant.phone,
-                                   'url': i.restaurant.url})
+                                   'url': i.restaurant.url, 'photo': i.restaurant.photo})
 
     c = db.session.query(User, Adventure, Comment) \
      \
@@ -116,13 +116,15 @@ def addAdventure(hostID, adventureName ):
     db.session.commit()
     return q.adventureID
 
-def addRestaurant(restaurant):
+def addRestaurant(restaurant, request):
 
     restaurantList = restaurant['formatted_address'].split(", ")
     zipState =  restaurantList[2].split(" ")
     zipCode = zipState[0]
     state = zipState[1]
-    res = Restaurant(restaurant_name= restaurant['name'], street= restaurantList[0], city = restaurantList[1], state = state, country= restaurantList[3], zipcode= zipCode)
+    photo = request
+    res = Restaurant(restaurant_name= restaurant['name'], street= restaurantList[0], city = restaurantList[1],
+                     state = state, country= restaurantList[3], zipcode= zipCode, photo=request)
     db.session.add(res)
     db.session.commit()
     q = db.session.query(Restaurant).filter(Restaurant.street == restaurantList[0]).filter(Restaurant.city == restaurantList[1]).filter(Restaurant.restaurant_name == restaurant["name"]).first()

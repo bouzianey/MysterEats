@@ -2,3 +2,28 @@ a:hover {
 	color: #e24d36;
 	text-decoration: underline;
 }
+
+html {
+	height: 100%;
+	padding: 0px;
+	margin: 0px;
+}
+
+body{
+	min-height: 100%;
+	/*background-color: green;*/
+}
+
+.page-wrap{
+    display: flex;
+	width:100%;
+	margin:auto;
+	max-width:375px;
+	max-height: 100%;
+	position:relative;
+    height: 100%;
+    /*background-color: blue; */
+    padding-bottom: 50px;
+	flex-direction: column;
+	box-shadow: 0 12px 15px 0 rgba(0,0,0,.24),0 17px 50px 0 rgba(0,0,0,.19);
+}

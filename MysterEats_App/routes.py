@@ -13,6 +13,7 @@ from MysterEats_App.forms import MessageForm
 from MysterEats_App.models import Message
 from MysterEats_App.config import *
 from sqlalchemy import desc
+import urllib.request, json
 
 @app.errorhandler(405)
 def page_not_found(e):
@@ -20,10 +21,10 @@ def page_not_found(e):
     return render_template('405.html'), 405
 
 
-@app.errorhandler(404)
-def page_not_found(e):
-    # note that we set the 404 status explicitly
-    return render_template('404.html'), 404
+# @app.errorhandler(404)
+# def page_not_found(e):
+#     # note that we set the 404 status explicitly
+#     return render_template('404.html'), 404
 
 @app.errorhandler(403)
 def forbidden_access(e):
@@ -82,8 +83,19 @@ def adv_inputs(adv_id):
                     RECIPIENTS += [record.email]
 
 
+        # testing
+        details = restaurant_details['photo']
+        endpoint = 'https://maps.googleapis.com/maps/api/place/photo?'
+        key = 'AIzaSyBXJT4-6to3js5aUnNsqcCdiSmBkPTb5Tk'
 
-        res_id = addRestaurant(restaurant_details)
+        # Building the URL for the request
+        nav_request = 'key={}&photoreference={}&maxwidth={}'.format(key, details, '300')
+        request = endpoint + nav_request
+
+
+
+
+        res_id = addRestaurant(restaurant_details, request)
         addAdventureRestaurant(adv_id, res_id)
         restaurant_details['formatted_address'] = restaurant_details['formatted_address'].replace(',', ' ')
         restaurant_details['name'] = restaurant_details['name'].replace('\'', ' ')
@@ -103,6 +115,8 @@ def adv_inputs(adv_id):
 @app.route('/adventure/following/<host>/<restaurant>/<int:adv_id>', methods=['GET', 'POST'])
 @login_required
 def following( host,restaurant, adv_id):
+
+
 
     # convert restaurant details from a string to a dict
     restaurant_format = restaurant.replace('\'','\"')

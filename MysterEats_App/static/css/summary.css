@@ -1,12 +1,65 @@
+body {
+	margin: 0px;
+}
 .page-wrap{
-	width:100%;
-	margin:auto;
-	max-width:375px;
-	min-height:812px;
-	position:relative;
+	/*width:100%;*/
+	/*margin:auto;*/
+	/*max-width:375px;*/
+	min-height:100vh;
+	/*position:relative;*/
 	box-shadow:0 12px 15px 0 rgba(0,0,0,.24),0 17px 50px 0 rgba(0,0,0,.19);
+	justify-content: center;
 }
 
+.summary-header {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	text-align: center;
+	margin: 10px 0px;
+	font-size: 2vh;
+}
+
+.summary-title {
+	font-size: 5vh;
+}
+
+.summary-host, .summary-date {
+	font-size: 3vh;
+}
+
+.restaurant-container, .comment-container {
+	display: flex;
+	flex-direction: column;
+	margin: 10px 10%;
+}
+
+.restaurant-header {
+	font-size: 4vh;
+	text-align: center;
+}
+
+.restaurant-item-container {
+	font-size: 2vh;
+	text-align: left;
+}
+
+.restaurant-items {
+	padding: 10px 0px;
+}
+
+.restaurant-name {
+	font-size: 3vh;
+}
+
+.post-container {
+	margin: 20px 10%;
+}
+
+.post-title {
+	font-size: 3vh;
+	text-align: center;
+}
 /**
  * Oscuro: #283035
  * Azul: #03658c
@@ -36,8 +89,8 @@ ul {
  * Lista de Comentarios
  =======================*/
 .comments-container {
-	margin: auto 0px;
-	width: 375px;
+	margin: 20px 0px;
+	width: 100%;
 }
 
 .comments-container h1 {
@@ -55,6 +108,14 @@ ul {
 	margin-top: 30px;
 	position: relative;
 }
+
+.comment-pag {
+	margin: 15px auto;
+	display: flex;
+	flex-direction: row;
+	align-content: center;
+}
+
 
 /**
  * Lineas / Detalles
@@ -194,6 +255,11 @@ ul {
 	border-radius: 4px 4px 0 0;
 }
 
+.comment-head {
+	display: flex;
+	flex-direction: column;
+}
+
 .comment-box .comment-head i {
 	float: right;
 	margin-left: 14px;
@@ -241,7 +307,7 @@ ul {
 }
 
 .comment-content {
-	width: 375px;
+	width: 100%;
 	background: #FFF;
 	padding: 12px;
 	font-size: 15px;
@@ -263,6 +329,17 @@ ul {
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
+}
+
+.comment {
+	margin: 15px 0px;
+}
+
+.comment-header-title {
+	display: flex;
+	flex-direction: row;
+	align-items: baseline;
+	justify-content: space-between;
 }
 
 /** =====================

@@ -97,7 +97,7 @@ class Restaurant(db.Model):
     country = db.Column(db.String(2), nullable=False)
     zipcode = db.Column(db.String(5), nullable=True)
     phone = db.Column(db.String(11), nullable=True)
-    photo = db.Column(db.String(50), nullable=True)
+    photo = db.Column(db.String(), nullable=True)
     url = db.Column(db.String(50), nullable=True)
 
     def __repr__(self):

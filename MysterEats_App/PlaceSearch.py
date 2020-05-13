@@ -77,7 +77,8 @@ class SearchRestaurant:
                 for x in range(20):
                     my_place_id = places_result['results'][x]['place_id']
                     # define the fields you would liked return. Formatted as a list.
-                    my_fields = ['name','formatted_address','geometry']
+                    # my_fields = ['name','formatted_address','geometry', 'photo']
+                    my_fields = ['name', 'formatted_address', 'geometry', 'photo']
                     # make a request for the details.
                     places_details  = gmaps.place(place_id= my_place_id , fields= my_fields)
                     # store the results in a list object.
@@ -102,7 +103,10 @@ class SearchRestaurant:
 
         random_number=randrange (1,restaurants_counter,1)
         #store in database
-        return stored_results[random_number]
+        results = {'name': stored_results[random_number]['name'], 'formatted_address': stored_results[random_number]['formatted_address'],
+                   'geometry': stored_results[random_number]['geometry'], 'photo': stored_results[random_number]['photos'][0]['photo_reference']}
+
+        return results
 
 
 class Directions:

@@ -1,10 +1,14 @@
 .page-wrap{
+    display: flex;
 	width:100%;
 	margin:auto;
 	max-width:375px;
 	max-height: 100%;
 	position:relative;
-  height: 100%;
+    height: 100%;
+    /*background-color: blue; */
+    padding-bottom: 50px;
+    box-shadow: 0 12px 15px 0 rgba(0,0,0,.24),0 17px 50px 0 rgba(0,0,0,.19);
 }
 
 .body {
@@ -108,18 +112,21 @@
   text-align: center;
   border-radius: 30px;
   box-shadow: 0 13px 26px rgba(0, 0, 0, 0.2), 0 3px 6px rgba(0, 0, 0, 0.2);
+  justify-content: space-around;
 }
 
 /* Adventures Gallery */
 div.adventure-gallery {
-  padding-top: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 
 div.gallery {
-  margin: 5px;
+  margin: 5px auto;
   border: 1px solid #ccc;
   float: left;
-  max-width: 375px;
+  width: 90%;
 }
 
 div.gallery:hover {
@@ -134,4 +141,20 @@ div.gallery img {
 div.desc {
   padding: 15px;
   text-align: center;
+}
+
+.login-html {
+  display: flex;
+  flex-direction: column;
+}
+
+.pag {
+	margin: 15px auto;
+	display: flex;
+	flex-direction: row;
+	align-content: center;
+}
+
+.mb-4, .my-4 {
+	/* margin-bottom: 1.5rem !important; */
 }

@@ -9,6 +9,7 @@
 .follow-buttons {
     height: 100px;
     line-height: 100px;
-    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
 }
-
